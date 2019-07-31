@@ -7,6 +7,7 @@ commander
   .option('-b --baseline <dir>', 'baseline directory, default is .')
   .option('-c --compare <dir>', 'compare directory, default is ./compare')
   .option('-r --report <dir>', 'report directory, default is ./report')
+  .option('-g --group <match>', 'group seperator, default is .')
 
 commander
   .command('generate')
@@ -16,7 +17,8 @@ commander
     const VR = new VisualReporter({
       baseline: commander.baseline || process.cwd(),
       compare: commander.compare || process.cwd() + '/compare',
-      report: commander.report || process.cwd() + '/report'
+      report: commander.report || process.cwd() + '/report',
+      group: commander.group || '.'
     })
     VR.generateReport()
   })

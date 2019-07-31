@@ -92,6 +92,27 @@ intersection files: ${this.files.intersection.length}
     this.files.intersection = this.getIntersection(this.files.compare, this.files.baseline)
   }
 
+  analyzeGroup(name) {
+    this.groups[name] = []
+    this.files[name].forEach(F => {
+      F.replace(/\.png$/i, '').split(this.cfg.group).forEach((value, I) => {
+        if (!this.groups[name][I]) {
+          this.groups[name][I] = {}
+        }
+        if (!this.groups[name][I][value]) {
+          this.groups[name][I][value] = 0
+        }
+        this.groups[name][I][value]++
+      })
+    })
+  }
+
+  analyzeGroups() {
+    this.groups = {}
+    this.analyzeGroup('baseline')
+    this.analyzeGroup('compare')
+  }
+
   generateDiffImages() {
     const bar = new Bar({}, Presets.shades_classic)
     bar.start(this.files.intersection.length, 0)
@@ -113,6 +134,7 @@ intersection files: ${this.files.intersection.length}
             compare: path.relative(this.cfg.report, this.cfg.compare)
           },
           ...this.files,
+          groups: this.groups,
           diff: this.diff
         },
         undefined,
@@ -124,6 +146,7 @@ intersection files: ${this.files.intersection.length}
   generateReport() {
     this.readFiles()
     this.printInfo()
+    this.analyzeGroups()
     this.generateDiffImages()
     this.saveMeta()
   }
