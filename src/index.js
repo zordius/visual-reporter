@@ -20,12 +20,17 @@ class visualReporter {
     return list2.filter(F => !list1.includes(F))
   }
 
+  getIntersection (list1, list2) {
+    return list2.filter(F => list1.includes(F))
+  }
+
   printInfo () {
     console.log(`
-baseline files: ${this.files.baseline.length}
-compare files : ${this.files.compare.length}
-added files   : ${this.files.add.length}
-removed files : ${this.files.remove.length}
+baseline files    : ${this.files.baseline.length}
+compare files     : ${this.files.compare.length}
+added files       : ${this.files.add.length}
+removed files     : ${this.files.remove.length}
+intersection files: ${this.files.intersection.length}
 `)
   }
 
@@ -34,6 +39,7 @@ removed files : ${this.files.remove.length}
     this.files.compare = this.getFiles(this.cfg.compare)
     this.files.add = this.getAdded(this.files.baseline, this.files.compare)
     this.files.remove = this.getAdded(this.files.compare, this.files.baseline)
+    this.files.intersection = this.getIntersection(this.files.compare, this.files.baseline)
     this.printInfo()
   }
 }
