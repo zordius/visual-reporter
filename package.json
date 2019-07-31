@@ -1,0 +1,27 @@
+{
+  "name": "visual-reporter",
+  "version": "1.0.0",
+  "description": "Generate Visual Changes Report",
+  "main": "dist/index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zordius/visual-reporter.git"
+  },
+  "keywords": [
+    "visual-diff",
+    "visual testing",
+    "image",
+    "screenshot",
+    "testing",
+    "html report"
+  ],
+  "author": "Zordius Chen",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/zordius/visual-reporter/issues"
+  },
+  "homepage": "https://github.com/zordius/visual-reporter#readme"
+}
