@@ -103,15 +103,29 @@ intersection files: ${this.files.intersection.length}
     bar.stop()
   }
 
-  generateHtml() {
-    console.log(this.diff)
+  saveMeta() {
+    fs.writeFileSync(
+      this.getFilename(this.cfg.report, 'index.json'),
+      JSON.stringify(
+        {
+          path: {
+            baseline: path.relative(this.cfg.report, this.cfg.baseline),
+            compare: path.relative(this.cfg.report, this.cfg.compare)
+          },
+          ...this.files,
+          diff: this.diff
+        },
+        undefined,
+        ' '
+      )
+    )
   }
 
   generateReport() {
     this.readFiles()
     this.printInfo()
     this.generateDiffImages()
-    this.generateHtml()
+    this.saveMeta()
   }
 }
 
