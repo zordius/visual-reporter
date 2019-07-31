@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+ <head>
+  <title>Visual Report</title>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" media="screen,projection"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<style>
+.count {
+  margin: 0 10px;
+}
+#g_remove .collapsible-header i {
+  color: #a00;
+}
+#g_add .collapsible-header i {
+  color: #00c;
+}
+#g_unch .collapsible-header i {
+  color: #0a0;
+}
+</style>
+ </head>
+<body>
+ <nav>
+  <div class="nav-wrapper">
+   <a href="./index.html" class="brand-logo">Visual Report</a>
+   <ul id="nav-mobile" class="right hide-on-med-and-down">
+    <li><a href="sass.html">Sass</a></li>
+    <li><a href="badges.html">Components</a></li>
+    <li><a href="collapsible.html">JavaScript</a></li>
+   </ul>
+  </div>
+ </nav>
+ <ul class="collapsible">
+    <li id="g_remove">
+      <div class="collapsible-header"><i class="material-icons">remove_circle</i>Deleted Images<b class="count"></b></div>
+      <div class="collapsible-body"><span>Lorem ipsum dolor sit amet.</span></div>
+    </li>
+    <li id="g_add">
+      <div class="collapsible-header"><i class="material-icons">add_circle</i>Added Images<b class="count"></b></div>
+      <div class="collapsible-body"><span>Lorem ipsum dolor sit amet.</span></div>
+    </li>
+    <li id="g_unch">
+      <div class="collapsible-header"><i class="material-icons">check_circle</i>Unchanged Images<b class="count"></b></div>
+      <div class="collapsible-body"><span>Lorem ipsum dolor sit amet.</span></div>
+    </li>
+  </ul>
+ 
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+<script type="text/javascript" src="index.js"></script>
+<script>
+document.querySelector('#g_remove .count').innerHTML = R.remove.length
+document.querySelector('#g_add .count').innerHTML = R.add.length
+document.querySelector('#g_unch .count').innerHTML = R.unchanged.length
+M.AutoInit()
+</script>
+</body>
+</html>
