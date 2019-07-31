@@ -12,14 +12,13 @@ commander
   .command('generate')
   .alias('gen')
   .description('Generate visual report')
-  .action((opts) => {
+  .action(opts => {
     const VR = new VisualReporter({
       baseline: commander.baseline || process.cwd(),
       compare: commander.compare || process.cwd() + '/compare',
-      report: commander.report || process.cwd() + '/report',
+      report: commander.report || process.cwd() + '/report'
     })
     VR.generateReport()
   })
 
-commander
-  .parse(process.argv)
+commander.parse(process.argv)

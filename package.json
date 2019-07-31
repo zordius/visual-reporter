@@ -7,7 +7,7 @@
   "scripts": {
     "build": "NODE_ENV=production babel src --out-dir dist && chmod 755 dist/cmd.js",
     "doc": "babel-node src/cmd.js gen --baseline examples/baseline/ --compare examples/current/",
-    "lint": "eslint src/*.js",
+    "lint": "prettier --write src/*.js;eslint src/*.js",
     "test": "jest"
   },
   "repository": {
@@ -29,6 +29,7 @@
   },
   "homepage": "https://github.com/zordius/visual-reporter#readme",
   "dependencies": {
+    "cli-progress": "^2.1.1",
     "commander": "^2.20.0",
     "pixelmatch": "^5.0.2",
     "pngjs": "^3.4.0",
@@ -70,6 +71,7 @@
     "eslint-plugin-promise": "^4.0.1",
     "eslint-plugin-react": "^7.11.1",
     "eslint-plugin-standard": "^4.0.0",
-    "jest": "^24.8.0"
+    "jest": "^24.8.0",
+    "prettier": "^1.18.2"
   }
 }
