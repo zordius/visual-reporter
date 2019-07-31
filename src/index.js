@@ -24,7 +24,7 @@ class visualReporter {
   }
 
   getFilename(dir, file) {
-    return path.join(dir, file)
+    return path.resolve(dir, file)
   }
 
   readPng(dir, file) {
@@ -95,15 +95,17 @@ intersection files: ${this.files.intersection.length}
   analyzeGroup(name) {
     this.groups[name] = []
     this.files[name].forEach(F => {
-      F.replace(/\.png$/i, '').split(this.cfg.group).forEach((value, I) => {
-        if (!this.groups[name][I]) {
-          this.groups[name][I] = {}
-        }
-        if (!this.groups[name][I][value]) {
-          this.groups[name][I][value] = 0
-        }
-        this.groups[name][I][value]++
-      })
+      F.replace(/\.png$/i, '')
+        .split(this.cfg.group)
+        .forEach((value, I) => {
+          if (!this.groups[name][I]) {
+            this.groups[name][I] = {}
+          }
+          if (!this.groups[name][I][value]) {
+            this.groups[name][I][value] = 0
+          }
+          this.groups[name][I][value]++
+        })
     })
   }
 
@@ -127,21 +129,29 @@ intersection files: ${this.files.intersection.length}
   saveMeta() {
     fs.writeFileSync(
       this.getFilename(this.cfg.report, 'index.js'),
-      'R = ' + JSON.stringify(
-        {
-          path: {
-            baseline: path.relative(this.cfg.report, this.cfg.baseline),
-            compare: path.relative(this.cfg.report, this.cfg.compare)
+      'R = ' +
+        JSON.stringify(
+          {
+            path: {
+              baseline: path.relative(this.cfg.report, this.cfg.baseline),
+              compare: path.relative(this.cfg.report, this.cfg.compare)
+            },
+            ...this.files,
+            unchanged: this.diff.filter(R => R.diff === 0).map(R => R.file),
+            changed: this.diff.filter(R => R.diff),
+            groups: this.groups,
+            diff: this.diff
           },
-          ...this.files,
-          unchanged: this.diff.filter(R => R.diff === 0).map(R => R.file),
-          changed: this.diff.filter(R => R.diff),
-          groups: this.groups,
-          diff: this.diff
-        },
-        undefined,
-        ' '
-      )
+          undefined,
+          ' '
+        )
+    )
+  }
+
+  saveHTML() {
+    fs.writeFileSync(
+      this.getFilename(this.cfg.report, 'index.html'),
+      fs.readFileSync(this.getFilename(__dirname, '../report/index.html'))
     )
   }
 
@@ -151,6 +161,7 @@ intersection files: ${this.files.intersection.length}
     this.analyzeGroups()
     this.generateDiffImages()
     this.saveMeta()
+    this.saveHTML()
   }
 }
 
