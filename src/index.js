@@ -43,25 +43,9 @@ class visualReporter {
     const img2 = this.readPng(this.cfg.compare, file)
     const { width, height } = img1
     const diff = width * height - img2.width * img2.height
-
-    if (diff) {
-      return {
-        width,
-        height,
-        diff
-      }
-    }
-
-    const diffImg = new PNG({ width, height })
-
-    const ret = pixelmatch(img1.data, img2.data, diffImg.data, width, height, {
-      threshold: this.cfg.threshold,
-      includeAA: this.cfg.includeAA
-    })
-
-    this.writePng(this.cfg.report, file, diffImg)
-    return {
+    const R = {
       file,
+      sizeMatched: false,
       baseline: {
         width,
         height
@@ -70,8 +54,23 @@ class visualReporter {
         width: img2.width,
         height: img2.height
       },
-      diff: ret
+      diff
     }
+
+    if (diff) {
+      return R
+    }
+
+    R.sizeMatched = true
+    const diffImg = new PNG({ width, height })
+
+    R.diff = pixelmatch(img1.data, img2.data, diffImg.data, width, height, {
+      threshold: this.cfg.threshold,
+      includeAA: this.cfg.includeAA
+    })
+
+    this.writePng(this.cfg.report, file, diffImg)
+    return R
   }
 
   printInfo() {
@@ -93,7 +92,7 @@ intersection files: ${this.files.intersection.length}
     this.files.intersection = this.getIntersection(this.files.compare, this.files.baseline)
   }
 
-  generateDiff() {
+  generateDiffImages() {
     const bar = new Bar({}, Presets.shades_classic)
     bar.start(this.files.intersection.length, 0)
     this.diff = this.files.intersection.map((F, I) => {
@@ -111,7 +110,7 @@ intersection files: ${this.files.intersection.length}
   generateReport() {
     this.readFiles()
     this.printInfo()
-    this.generateDiff()
+    this.generateDiffImages()
     this.generateHtml()
   }
 }
