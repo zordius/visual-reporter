@@ -2,4 +2,13 @@ import pixelmatch from 'pixelmatch'
 import fs from 'fs'
 import { PNG } from 'pngjs'
 
-console.log(PNG)
+class visualReporter {
+  static defaultCfg = {
+  }
+
+  constructor (cfg) {
+    this.cfg = {...this.defaultCfg, ...cfg}
+  }
+}
+
+export default visualReporter
