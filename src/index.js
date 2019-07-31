@@ -9,7 +9,6 @@ class visualReporter {
 
   constructor(cfg) {
     this.cfg = { ...this.defaultCfg, ...cfg }
-    this.files = {}
   }
 
   getFiles(dir) {
@@ -85,13 +84,16 @@ intersection files: ${this.files.intersection.length}
 `)
   }
 
-  generateReport() {
+  readFiles() {
+    this.files = {}
     this.files.baseline = this.getFiles(this.cfg.baseline)
     this.files.compare = this.getFiles(this.cfg.compare)
     this.files.add = this.getAdded(this.files.baseline, this.files.compare)
     this.files.remove = this.getAdded(this.files.compare, this.files.baseline)
     this.files.intersection = this.getIntersection(this.files.compare, this.files.baseline)
-    this.printInfo()
+  }
+
+  generateDiff() {
     const bar = new Bar({}, Presets.shades_classic)
     bar.start(this.files.intersection.length, 0)
     this.diff = this.files.intersection.map((F, I) => {
@@ -100,7 +102,17 @@ intersection files: ${this.files.intersection.length}
       return R
     })
     bar.stop()
+  }
+
+  generateHtml() {
     console.log(this.diff)
+  }
+
+  generateReport() {
+    this.readFiles()
+    this.printInfo()
+    this.generateDiff()
+    this.generateHtml()
   }
 }
 
