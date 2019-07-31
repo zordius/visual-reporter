@@ -5,7 +5,8 @@
   "bin": "dist/cmd.js",
   "main": "dist/index.js",
   "scripts": {
-    "cmd": "babel-node src/cmd.js",
+    "build": "NODE_ENV=production babel src --out-dir dist && chmod 755 dist/cmd.js",
+    "doc": "babel-node src/cmd.js gen --baseline examples/baseline/ --compare examples/current/",
     "lint": "eslint src/*.js",
     "test": "jest"
   },
