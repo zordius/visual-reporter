@@ -126,14 +126,16 @@ intersection files: ${this.files.intersection.length}
 
   saveMeta() {
     fs.writeFileSync(
-      this.getFilename(this.cfg.report, 'index.json'),
-      JSON.stringify(
+      this.getFilename(this.cfg.report, 'index.js'),
+      'R = ' + JSON.stringify(
         {
           path: {
             baseline: path.relative(this.cfg.report, this.cfg.baseline),
             compare: path.relative(this.cfg.report, this.cfg.compare)
           },
           ...this.files,
+          unchanged: this.diff.filter(R => R.diff === 0).map(R => R.file),
+          changed: this.diff.filter(R => R.diff),
           groups: this.groups,
           diff: this.diff
         },
