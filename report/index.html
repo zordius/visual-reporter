@@ -31,18 +31,31 @@ select:invalid {
 #g_pchanged .collapsible-header i {
   color: #fc0;
 }
-.material-placeholder:nth-child(1) {
+.material-placeholder:nth-last-child(2),
+.material-placeholder:nth-last-child(3) {
   position: absolute;
   top: 0;
   left: 0;
   margin: 10px;
+  width: calc(100% - 20px);
 }
 .material-placeholder:nth-child(2) {
-  opacity: 0;
+  transition: opacity 1s;
 }
 .material-placeholder:nth-child(2):hover {
+  opacity: 0;
+}
+.material-placeholder:nth-child(3) {
+  transition: opacity 1s;
+  opacity: 0;
+}
+.material-placeholder:nth-child(3):hover {
   opacity: 1;
 }
+.card:hover .material-placeholder:nth-child(2) {
+  opacity: 0;
+}
+
 .materialboxed {
   max-height: 200px;
 }
@@ -121,8 +134,9 @@ const setAlt = (img) => {
 const image = (file, dir) => `<div class="ccol col s12 m6 l4 ${groupClass(file)}">
  <div class="card darken-1">
   <div class="card-image" data-tooltip="${file.file ? `diff=${file.diff}, ${file.baseline.width} × ${file.baseline.height}${file.sizeMatched ? '' : ` ⇒  ${file.compare.width} × ${file.compare.height}`}` : ''}">
+   ${file.file && !dir ? `<img class="materialboxed" src="${R.path.baseline}${file.file}">` : ''}
    <img class="materialboxed" src="${(dir || '')}${file.file || file}"${file.file ? '' : ' onLoad="setAlt(this)"'}>
-   ${file.file && !file.sizeMatched ? `<img class="materialboxed" src="${R.path.baseline}${file.file}">` : ''}
+   ${file.file ? `<img class="materialboxed" src="${R.path.compare}${file.file}">` : ''}
   </div>
   <div class="card-content">${file.file || file}</div>
  </div>
@@ -179,7 +193,7 @@ document.querySelector('#g_add .collapsible-body').innerHTML = sectionHTML('add'
 document.querySelector('#g_unchanged .count').innerHTML = R.unchanged.length
 document.querySelector('#g_unchanged .collapsible-body').innerHTML = sectionHTML('unchanged', 'baseline')
 document.querySelector('#g_schanged .count').innerHTML = R.schanged.length
-document.querySelector('#g_schanged .collapsible-body').innerHTML = sectionHTML('schanged', 'compare')
+document.querySelector('#g_schanged .collapsible-body').innerHTML = sectionHTML('schanged', 'baseline')
 document.querySelector('#g_pchanged .count').innerHTML = R.pchanged.length
 document.querySelector('#g_pchanged .collapsible-body').innerHTML = sectionHTML('pchanged')
 
