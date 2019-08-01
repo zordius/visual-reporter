@@ -115,6 +115,7 @@ const image = (file, dir) => `<div class="ccol col s12 m6 l4 ${groupClass(file)}
  </div>
 </div>`
 
+const safeClass = name => name.replace(/,/, '_')
 const selStyle = (sel) => {
   const P = sel.parentNode.parentNode
   if (!P.styleNode) {
@@ -122,7 +123,7 @@ const selStyle = (sel) => {
     document.body.appendChild(P.styleNode)
   }
 
-  P.styleNode.innerHTML = sel.value === '' ? '' : `${sel.groupClass} .ccol {display: none} ${sel.groupClass} .g_${sel.value} {display: block}`
+  P.styleNode.innerHTML = sel.value === '' ? '' : `${sel.groupClass} .ccol {display: none} ${sel.groupClass} .g_${safeClass(sel.value)} {display: block}`
 }
 
 const selGroup = (sel) => {
@@ -140,7 +141,7 @@ const selGroup = (sel) => {
   selStyle(sel)
 }
 
-const groupClass = (file) => file.replace(/\.png$/i, '').split(R.cfg.seperator).map(G => `g_${G}`).join(' ')
+const groupClass = (file) => file.replace(/\.png$/i, '').split(R.cfg.seperator).map(G => safeClass(`g_${G}`)).join(' ')
 
 const groupHTML = (group, name, index) => `
 <div class="col s12 m6 l4">
