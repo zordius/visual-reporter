@@ -31,6 +31,18 @@ select:invalid {
 #g_pchanged .collapsible-header i {
   color: #fc0;
 }
+.material-placeholder:nth-child(1) {
+  position: absolute;
+  top: 0;
+  left: 0;
+  margin: 10px;
+}
+.material-placeholder:nth-child(2) {
+  opacity: 0;
+}
+.material-placeholder:nth-child(2):hover {
+  opacity: 1;
+}
 .materialboxed {
   max-height: 200px;
 }
@@ -110,6 +122,7 @@ const image = (file, dir) => `<div class="ccol col s12 m6 l4 ${groupClass(file)}
  <div class="card darken-1">
   <div class="card-image" data-tooltip="${file.file ? `diff=${file.diff}, ${file.baseline.width} × ${file.baseline.height}${file.sizeMatched ? '' : ` ⇒  ${file.compare.width} × ${file.compare.height}`}` : ''}">
    <img class="materialboxed" src="${(dir || '')}${file.file || file}"${file.file ? '' : ' onLoad="setAlt(this)"'}>
+   ${file.file && !file.sizeMatched ? `<img class="materialboxed" src="${R.path.baseline}${file.file}">` : ''}
   </div>
   <div class="card-content">${file.file || file}</div>
  </div>
