@@ -103,12 +103,12 @@ select:invalid {
 <script type="text/javascript" src="index.js"></script>
 <script>
 const setAlt = (img) => {
-  img.parentNode.parentNode.title = `${img.naturalWidth} × ${img.naturalHeight}`
+  img.parentNode.parentNode.dataset.tooltip = `${img.naturalWidth} × ${img.naturalHeight}`
 }
 
 const image = (file, dir) => `<div class="ccol col s12 m6 l4 ${groupClass(file)}">
  <div class="card darken-1">
-  <div class="card-image" title="${file.file ? `diff=${file.diff}${file.sizeMatched ? '' : `, ${file.baseline.width} × ${file.baseline.height} ⇒  ${file.compare.width} × ${file.compare.height}`}` : ''}">
+  <div class="card-image" data-tooltip="${file.file ? `diff=${file.diff}, ${file.baseline.width} × ${file.baseline.height}${file.sizeMatched ? '' : ` ⇒  ${file.compare.width} × ${file.compare.height}`}` : ''}">
    <img class="materialboxed" src="${(dir || '')}${file.file || file}"${file.file ? '' : ' onLoad="setAlt(this)"'}>
   </div>
   <div class="card-content">${file.file || file}</div>
@@ -172,6 +172,7 @@ document.querySelector('#g_pchanged .collapsible-body').innerHTML = sectionHTML(
 
 M.Collapsible.init(document.querySelectorAll('.collapsible'))
 M.Materialbox.init(document.querySelectorAll('.materialboxed'))
+M.Tooltip.init(document.querySelectorAll('.card-image'))
 </script>
 </body>
 </html>
