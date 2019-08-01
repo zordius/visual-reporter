@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html>
+ <head>
+  <title>Visual Report</title>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" media="screen,projection"/>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<style>
+select {
+  display: block;
+  font-weight: 900;
+}
+select:invalid {
+  color: #888;
+  font-weight: 300;
+}
+.count {
+  margin: 0 10px;
+}
+#g_remove .collapsible-header i {
+  color: #a00;
+}
+#g_add .collapsible-header i {
+  color: #00c;
+}
+#g_unchanged .collapsible-header i {
+  color: #0a0;
+}
+#g_schanged .collapsible-header i,
+#g_pchanged .collapsible-header i {
+  color: #fc0;
+}
+.material-placeholder:nth-last-child(2),
+.material-placeholder:nth-last-child(3) {
+  position: absolute;
+  top: 0;
+  left: 0;
+  margin: 10px;
+  width: calc(100% - 20px);
+}
+.material-placeholder:nth-child(2) {
+  transition: opacity 1s;
+}
+.material-placeholder:nth-child(2):hover {
+  opacity: 0;
+}
+.material-placeholder:nth-child(3) {
+  transition: opacity 1s;
+  opacity: 0;
+}
+.material-placeholder:nth-child(3):hover {
+  opacity: 1;
+}
+.card:hover .material-placeholder:nth-child(2) {
+  opacity: 0;
+}
+
+.materialboxed {
+  max-height: 200px;
+}
+.card-image {
+  padding: 10px;
+  min-height: 200px;
+}
+.card-image:hover {
+  background: #eff;
+}
+.card .card-image img {
+  border-radius: 0;
+  width: auto;
+  max-width: 100%;
+  margin: 0 auto;
+}
+.card .card-content {
+  word-break: break-all;
+  padding: 10px;
+}
+#g_remove .card-content {
+  background: #fdd;
+}
+#g_add .card-content {
+  background: #ddf;
+}
+#g_unchanged .card-content {
+  background: #dfd;
+}
+#g_schanged .card-content,
+#g_pchanged .card-content {
+  background: #ffd;
+}
+</style>
+ </head>
+<body>
+ <nav>
+  <div class="nav-wrapper">
+   <a href="./index.html" class="brand-logo">Visual Report</a>
+  </div>
+ </nav>
+ <ul class="collapsible">
+  <li id="g_remove">
+   <div class="collapsible-header"><i class="material-icons">remove_circle</i>Deleted Images<b class="count"></b></div>
+   <div class="collapsible-body">
+   </div>
+  </li>
+  <li id="g_add">
+   <div class="collapsible-header"><i class="material-icons">add_circle</i>Added Images<b class="count"></b></div>
+   <div class="collapsible-body">
+   </div>
+  </li>
+  <li id="g_unchanged">
+   <div class="collapsible-header"><i class="material-icons">check_circle</i>Unchanged Images<b class="count"></b></div>
+   <div class="collapsible-body">
+   </div>
+  </li>
+  <li id="g_schanged">
+   <div class="collapsible-header"><i class="material-icons">warning</i>Size Changed Images<b class="count"></b></div>
+   <div class="collapsible-body">
+   </div>
+  </li>
+  <li id="g_pchanged" class="active">
+   <div class="collapsible-header"><i class="material-icons">warning</i>Content Changed Images<b class="count"></b></div>
+   <div class="collapsible-body">
+   </div>
+  </li>
+ </ul>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+<script type="text/javascript" src="index.js"></script>
+<script>
+const setAlt = (img) => {
+  img.parentNode.parentNode.dataset.tooltip = `${img.naturalWidth} × ${img.naturalHeight}`
+}
+
+const image = (file, dir) => `<div class="ccol col s12 m6 l4 ${groupClass(file)}">
+ <div class="card darken-1">
+  <div class="card-image" data-tooltip="${file.file ? `diff=${file.diff}, ${file.baseline.width} × ${file.baseline.height}${file.sizeMatched ? '' : ` ⇒  ${file.compare.width} × ${file.compare.height}`}` : ''}">
+   ${file.file && !dir ? `<img class="materialboxed" src="${R.path.baseline}${file.file}">` : ''}
+   <img class="materialboxed" src="${(dir || '')}${file.file || file}"${file.file ? '' : ' onLoad="setAlt(this)"'}>
+   ${file.file ? `<img class="materialboxed" src="${R.path.compare}${file.file}">` : ''}
+  </div>
+  <div class="card-content">${file.file || file}</div>
+ </div>
+</div>`
+
+const safeClass = name => name.replace(/,/, '_')
+const selStyle = (sel) => {
+  const P = sel.parentNode.parentNode
+  if (!P.styleNode) {
+    P.styleNode = document.createElement('style')
+    document.body.appendChild(P.styleNode)
+  }
+
+  P.styleNode.innerHTML = sel.value === '' ? '' : `${sel.groupClass} .ccol {display: none} ${sel.groupClass} .g_${safeClass(sel.value)} {display: block}`
+}
+
+const selGroup = (sel) => {
+  if (!sel.groupClass) {
+    sel.groupClass = `#${sel.className.replace(/^s_/, 'g_')}`
+  }
+  if (sel.value === '') {
+    return selStyle(sel)
+  }
+  document.querySelectorAll(`${sel.groupClass} select`).forEach(S => {
+    if (S.tabIndex !== sel.tabIndex) {
+      S.value = ''
+    }
+  })
+  selStyle(sel)
+}
+
+const groupClass = (file) => (file.file || file).replace(/\.png$/i, '').split(R.cfg.seperator).map(G => safeClass(`g_${G}`)).join(' ')
+
+const groupHTML = (group, name, index) => `
+<div class="col s12 m6 l4">
+ <select class="s_${name}" tabIndex="${index}" onChange="selGroup(this)" required>
+  <option value="" selected>${Object.keys(group).length} ${R.cfg.groups[index] || 'groups'}</option>
+${Object.keys(group).map(G => `<option value="${G}">${G} × ${group[G]}</option>`).join('')}
+ </select>
+</div>
+`
+
+const groupsHTML = (group) => R.groups[group].map((G, I) => groupHTML(G, group, I)).join('')
+
+const sectionHTML = (group, path) => `
+<div class="row">${groupsHTML(group)}</div>
+<div class="row">${R[group].map(F => image(F, R.path[path])).join('')}</div>
+`
+
+document.querySelector('#g_remove .count').innerHTML = R.remove.length
+document.querySelector('#g_remove .collapsible-body').innerHTML = sectionHTML('remove', 'baseline')
+document.querySelector('#g_add .count').innerHTML = R.add.length
+document.querySelector('#g_add .collapsible-body').innerHTML = sectionHTML('add', 'compare')
+document.querySelector('#g_unchanged .count').innerHTML = R.unchanged.length
+document.querySelector('#g_unchanged .collapsible-body').innerHTML = sectionHTML('unchanged', 'baseline')
+document.querySelector('#g_schanged .count').innerHTML = R.schanged.length
+document.querySelector('#g_schanged .collapsible-body').innerHTML = sectionHTML('schanged', 'baseline')
+document.querySelector('#g_pchanged .count').innerHTML = R.pchanged.length
+document.querySelector('#g_pchanged .collapsible-body').innerHTML = sectionHTML('pchanged')
+
+M.Collapsible.init(document.querySelectorAll('.collapsible'))
+M.Materialbox.init(document.querySelectorAll('.materialboxed'))
+M.Tooltip.init(document.querySelectorAll('.card-image'))
+</script>
+</body>
+</html>
