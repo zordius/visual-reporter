@@ -133,8 +133,8 @@ intersection files: ${this.files.intersection.length}
         JSON.stringify(
           {
             path: {
-              baseline: path.relative(this.cfg.report, this.cfg.baseline),
-              compare: path.relative(this.cfg.report, this.cfg.compare)
+              baseline: path.relative(this.cfg.report, this.cfg.baseline) + '/',
+              compare: path.relative(this.cfg.report, this.cfg.compare) + '/'
             },
             ...this.files,
             unchanged: this.diff.filter(R => R.diff === 0).map(R => R.file),

@@ -4,6 +4,7 @@
   <title>Visual Report</title>
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" media="screen,projection"/>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <style>
 .count {
@@ -17,6 +18,37 @@
 }
 #g_unch .collapsible-header i {
   color: #0a0;
+}
+#g_ch .collapsible-header i {
+  color: #fc0;
+}
+.materialboxed {
+  max-height: 200px;
+}
+.card-image {
+  padding: 10px;
+  min-height: 200px;
+}
+.card .card-image img {
+  width: auto;
+  max-width: 100%;
+  margin: 0 auto;
+}
+.card .card-content {
+  word-break: break-all;
+  padding: 10px;
+}
+#g_remove .card-content {
+  background: #fdd;
+}
+#g_add .card-content {
+  background: #ddf;
+}
+#g_unch .card-content {
+  background: #dfd;
+}
+#g_ch .card-content {
+  background: #ffd;
 }
 </style>
  </head>
@@ -32,26 +64,54 @@
   </div>
  </nav>
  <ul class="collapsible">
-    <li id="g_remove">
-      <div class="collapsible-header"><i class="material-icons">remove_circle</i>Deleted Images<b class="count"></b></div>
-      <div class="collapsible-body"><span>Lorem ipsum dolor sit amet.</span></div>
-    </li>
-    <li id="g_add">
-      <div class="collapsible-header"><i class="material-icons">add_circle</i>Added Images<b class="count"></b></div>
-      <div class="collapsible-body"><span>Lorem ipsum dolor sit amet.</span></div>
-    </li>
-    <li id="g_unch">
-      <div class="collapsible-header"><i class="material-icons">check_circle</i>Unchanged Images<b class="count"></b></div>
-      <div class="collapsible-body"><span>Lorem ipsum dolor sit amet.</span></div>
-    </li>
-  </ul>
- 
+  <li id="g_remove">
+   <div class="collapsible-header"><i class="material-icons">remove_circle</i>Deleted Images<b class="count"></b></div>
+   <div class="collapsible-body">
+    <div class="row">
+    </div>
+   </div>
+  </li>
+  <li id="g_add">
+   <div class="collapsible-header"><i class="material-icons">add_circle</i>Added Images<b class="count"></b></div>
+   <div class="collapsible-body">
+    <div class="row">
+    </div>
+   </div>
+  </li>
+  <li id="g_unch">
+   <div class="collapsible-header"><i class="material-icons">check_circle</i>Unchanged Images<b class="count"></b></div>
+   <div class="collapsible-body">
+    <div class="row">
+    </div>
+   </div>
+  </li>
+  <li id="g_ch" class="active">
+   <div class="collapsible-header"><i class="material-icons">warning</i>Changed Images<b class="count"></b></div>
+   <div class="collapsible-body">
+    <div class="row">
+    </div>
+   </div>
+  </li>
+ </ul>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 <script type="text/javascript" src="index.js"></script>
 <script>
+const image = (file, dir) => `<div class="col s12 m6 l4">
+ <div class="card darken-1">
+  <div class="card-image">
+   <img class="materialboxed" src="${(dir || '')}${file}">
+  </div>
+  <div class="card-content">${file}</div>
+ </div>
+</div>`
+
 document.querySelector('#g_remove .count').innerHTML = R.remove.length
+document.querySelector('#g_remove .collapsible-body .row').innerHTML = R.remove.map(F => image(F, R.path.baseline)).join('')
 document.querySelector('#g_add .count').innerHTML = R.add.length
+document.querySelector('#g_add .collapsible-body .row').innerHTML = R.add.map(F => image(F, R.path.compare)).join('')
 document.querySelector('#g_unch .count').innerHTML = R.unchanged.length
+document.querySelector('#g_unch .collapsible-body .row').innerHTML = R.unchanged.map(F => image(F, R.path.baseline)).join('')
+document.querySelector('#g_ch .count').innerHTML = R.changed.length
 M.AutoInit()
 </script>
 </body>
