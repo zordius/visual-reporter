@@ -7,7 +7,8 @@ commander
   .option('-b --baseline <dir>', 'baseline directory, default is .')
   .option('-c --compare <dir>', 'compare directory, default is ./compare')
   .option('-r --report <dir>', 'report directory, default is ./report')
-  .option('-g --group <match>', 'group seperator, default is .')
+  .option('-s --seperator <match>', 'group seperator, default is .')
+  .option('-g --groups <g1,g2,g3...>', 'group names, default is groups')
 
 commander
   .command('generate')
@@ -18,7 +19,8 @@ commander
       baseline: commander.baseline || process.cwd(),
       compare: commander.compare || process.cwd() + '/compare',
       report: commander.report || process.cwd() + '/report',
-      group: commander.group || '.'
+      seperator: commander.seperator || '.',
+      groups: commander.groups?.split(',') || []
     })
     VR.generateReport()
   })

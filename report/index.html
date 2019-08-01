@@ -97,11 +97,14 @@ select {
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 <script type="text/javascript" src="index.js"></script>
 <script>
+const setAlt = (img) => {
+  img.parentNode.parentNode.title = `${img.naturalWidth} × ${img.naturalHeight}`
+}
 
 const image = (file, dir) => `<div class="ccol col s12 m6 l4 ${groupClass(file)}">
  <div class="card darken-1">
   <div class="card-image">
-   <img class="materialboxed" src="${(dir || '')}${file}">
+   <img class="materialboxed" src="${(dir || '')}${file}" onLoad="setAlt(this)">
   </div>
   <div class="card-content">${file}</div>
  </div>
@@ -133,16 +136,16 @@ const selGroup = (sel) => {
 
 const groupClass = (file) => file.replace(/\.png$/i, '').split(R.cfg.group).map(G => `g_${G}`).join(' ')
 
-const groupHTML = (group, name) => `
+const groupHTML = (group, name, index) => `
 <div class="col s12 m6 l4">
  <select class="s_${name}" onChange="selGroup(this)">
-  <option value="" selected>${Object.keys(group).length} groups</option>
+  <option value="" selected>${Object.keys(group).length} ${R.cfg.groups[index] || 'groups'}</option>
 ${Object.keys(group).map(G => `<option value="${G}">${G} × ${group[G]}</option>`).join('')}
  </select>
 </div>
 `
 
-const groupsHTML = (group) => R.groups[group].map(G => groupHTML(G, group)).join('')
+const groupsHTML = (group) => R.groups[group].map((G, I) => groupHTML(G, group, I)).join('')
 
 const sectionHTML = (group, path) => `
 <div class="row">${groupsHTML(group)}</div>

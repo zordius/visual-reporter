@@ -96,7 +96,7 @@ intersection files: ${this.files.intersection.length}
     this.groups[name] = []
     this.files[name].forEach(F => {
       F.replace(/\.png$/i, '')
-        .split(this.cfg.group)
+        .split(this.cfg.seperator)
         .forEach((value, I) => {
           if (!this.groups[name][I]) {
             this.groups[name][I] = {}
@@ -140,7 +140,8 @@ intersection files: ${this.files.intersection.length}
         JSON.stringify(
           {
             cfg: {
-              group: this.cfg.group
+              seperator: this.cfg.seperator,
+              groups: this.cfg.groups || []
             },
             path: {
               baseline: path.relative(this.cfg.report, this.cfg.baseline) + '/',
