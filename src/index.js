@@ -5,10 +5,8 @@ import { PNG } from 'pngjs'
 import { Bar, Presets } from 'cli-progress'
 
 class visualReporter {
-  static defaultCfg = {}
-
   constructor(cfg) {
-    this.cfg = { ...this.defaultCfg, ...cfg }
+    this.cfg = { ...cfg }
   }
 
   getFiles(dir) {
@@ -66,10 +64,11 @@ class visualReporter {
 
     R.diff = pixelmatch(img1.data, img2.data, diffImg.data, width, height, {
       threshold: this.cfg.threshold,
-      includeAA: this.cfg.includeAA
+      includeAA: this.cfg.includeAA,
+      alpha: this.cfg.alpha
     })
 
-    if (R.diff > 0 || this.cfg.keepunchanged) {
+    if (R.diff > 0 || this.cfg.keepUnchanged) {
       this.writePng(this.cfg.report, file, diffImg)
     }
     return R
