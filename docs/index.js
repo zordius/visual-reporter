@@ -9,8 +9,8 @@ R = {
   ]
  },
  "path": {
-  "baseline": "../examples/baseline/",
-  "compare": "../examples/current/"
+  "baseline": "baseline/",
+  "compare": "current/"
  },
  "baseline": [
   "chrome._activity_onsale_combo_pc_noipad-組合賣場：_付款資訊欄._panelButton_PANEL_PAYMENT.default.png",
