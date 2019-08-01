@@ -9,6 +9,11 @@
 <style>
 select {
   display: block;
+  font-weight: 900;
+}
+select:invalid {
+  color: #888;
+  font-weight: 300;
 }
 .count {
   margin: 0 10px;
@@ -111,12 +116,13 @@ const image = (file, dir) => `<div class="ccol col s12 m6 l4 ${groupClass(file)}
 </div>`
 
 const selStyle = (sel) => {
-  if (!sel.styleNode) {
-    sel.styleNode = document.createElement('style')
-    document.body.appendChild(sel.styleNode)
+  const P = sel.parentNode.parentNode
+  if (!P.styleNode) {
+    P.styleNode = document.createElement('style')
+    document.body.appendChild(P.styleNode)
   }
 
-  sel.styleNode.innerHTML = sel.value === '' ? '' : `${sel.groupClass} .ccol {display: none} ${sel.groupClass} .g_${sel.value} {display: block}`
+  P.styleNode.innerHTML = sel.value === '' ? '' : `${sel.groupClass} .ccol {display: none} ${sel.groupClass} .g_${sel.value} {display: block}`
 }
 
 const selGroup = (sel) => {
@@ -127,18 +133,18 @@ const selGroup = (sel) => {
     return selStyle(sel)
   }
   document.querySelectorAll(`${sel.groupClass} select`).forEach(S => {
-    if (S !== sel) {
+    if (S.tabIndex !== sel.tabIndex) {
       S.value = ''
     }
   })
   selStyle(sel)
 }
 
-const groupClass = (file) => file.replace(/\.png$/i, '').split(R.cfg.group).map(G => `g_${G}`).join(' ')
+const groupClass = (file) => file.replace(/\.png$/i, '').split(R.cfg.seperator).map(G => `g_${G}`).join(' ')
 
 const groupHTML = (group, name, index) => `
 <div class="col s12 m6 l4">
- <select class="s_${name}" onChange="selGroup(this)">
+ <select class="s_${name}" tabIndex="${index}" onChange="selGroup(this)" required>
   <option value="" selected>${Object.keys(group).length} ${R.cfg.groups[index] || 'groups'}</option>
 ${Object.keys(group).map(G => `<option value="${G}">${G} × ${group[G]}</option>`).join('')}
  </select>
