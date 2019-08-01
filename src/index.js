@@ -111,8 +111,11 @@ intersection files: ${this.files.intersection.length}
 
   analyzeGroups() {
     this.groups = {}
-    this.analyzeGroup('baseline')
-    this.analyzeGroup('compare')
+    this.analyzeGroup('add')
+    this.analyzeGroup('remove')
+    this.analyzeGroup('unchanged')
+    this.analyzeGroup('pchanged')
+    this.analyzeGroup('schanged')
   }
 
   generateDiffImages() {
@@ -123,6 +126,10 @@ intersection files: ${this.files.intersection.length}
       bar.update(I + 1)
       return R
     })
+    this.files.unchanged = this.diff.filter(R => R.diff === 0).map(R => R.file)
+    const changed = this.diff.filter(R => R.diff)
+    this.files.schanged = changed.filter(R => !R.sizeMatched).map(R => R.file)
+    this.files.pchanged = changed.filter(R => R.sizeMatched).map(R => R.file)
     bar.stop()
   }
 
@@ -137,8 +144,6 @@ intersection files: ${this.files.intersection.length}
               compare: path.relative(this.cfg.report, this.cfg.compare) + '/'
             },
             ...this.files,
-            unchanged: this.diff.filter(R => R.diff === 0).map(R => R.file),
-            changed: this.diff.filter(R => R.diff),
             groups: this.groups,
             diff: this.diff
           },
@@ -158,8 +163,8 @@ intersection files: ${this.files.intersection.length}
   generateReport() {
     this.readFiles()
     this.printInfo()
-    this.analyzeGroups()
     this.generateDiffImages()
+    this.analyzeGroups()
     this.saveMeta()
     this.saveHTML()
   }

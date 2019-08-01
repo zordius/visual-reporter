@@ -29,7 +29,11 @@
   padding: 10px;
   min-height: 200px;
 }
+.card-image:hover {
+  background: #eff;
+}
 .card .card-image img {
+  border-radius: 0;
   width: auto;
   max-width: 100%;
   margin: 0 auto;
@@ -91,8 +95,12 @@
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 <script type="text/javascript" src="index.js"></script>
 <script>
-const image = (file, dir) => `<div class="col s12 m6 l4">
- <div class="card darken-1">
+
+const groupClass = (file, group) => {
+}
+
+const image = (file, dir, group) => `<div class="col s12 m6 l4">
+ <div class="card darken-1 ${groupClass(file, group)}">
   <div class="card-image">
    <img class="materialboxed" src="${(dir || '')}${file}">
   </div>
@@ -101,13 +109,20 @@ const image = (file, dir) => `<div class="col s12 m6 l4">
 </div>`
 
 document.querySelector('#g_remove .count').innerHTML = R.remove.length
-document.querySelector('#g_remove .collapsible-body .row').innerHTML = R.remove.map(F => image(F, R.path.baseline)).join('')
+document.querySelector('#g_remove .collapsible-body .row').innerHTML = R.remove.map(F => image(F, R.path.baseline, 'add')).join('')
 document.querySelector('#g_add .count').innerHTML = R.add.length
-document.querySelector('#g_add .collapsible-body .row').innerHTML = R.add.map(F => image(F, R.path.compare)).join('')
+document.querySelector('#g_add .collapsible-body .row').innerHTML = R.add.map(F => image(F, R.path.compare, 'remove')).join('')
 document.querySelector('#g_unch .count').innerHTML = R.unchanged.length
-document.querySelector('#g_unch .collapsible-body .row').innerHTML = R.unchanged.map(F => image(F, R.path.baseline)).join('')
-document.querySelector('#g_ch .count').innerHTML = R.changed.length
-document.querySelector('#g_ch .collapsible-body .row').innerHTML = R.changed.map(F => image(F.file)).join('')
+document.querySelector('#g_unch .collapsible-body .row').innerHTML = R.unchanged.map(F => image(F, R.path.baseline, 'unchanged')).join('')
+document.querySelector('#g_ch .count').innerHTML = R.schanged.length + R.pchanged.length
+document.querySelector('#g_ch .collapsible-body .row').innerHTML = `
+${R.schanged.length ? `<p>Size Changed Images × ${R.schanged.length}</p>
+${R.schanged.map(F => image(F, R.path.compare, 'schanged')).join('')}
+` : ''}
+${R.pchanged.length ? `<p>Content Changed Images × ${R.pchanged.length}</p>
+${R.pchanged.map(F => image(F, '', 'pchanged')).join('')}
+` : ''}`
+
 M.AutoInit()
 </script>
 </body>
