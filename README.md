@@ -1,9 +1,9 @@
 visual-reporter
 ===============
 
-Generate Visual Changes Report
+Generate Visual Changes Report, here is a life DEMO:
 
-<img src="example1.jpg" />
+<a href="https://zordius.github.io/visual-reporter/"><img src="example1.jpg" /></a>
 
 Usage
 -----
