@@ -69,7 +69,9 @@ class visualReporter {
       includeAA: this.cfg.includeAA
     })
 
-    this.writePng(this.cfg.report, file, diffImg)
+    if (R.diff > 0 || this.cfg.keepunchanged) {
+      this.writePng(this.cfg.report, file, diffImg)
+    }
     return R
   }
 
