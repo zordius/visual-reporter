@@ -139,6 +139,9 @@ intersection files: ${this.files.intersection.length}
       'R = ' +
         JSON.stringify(
           {
+            cfg: {
+              group: this.cfg.group
+            },
             path: {
               baseline: path.relative(this.cfg.report, this.cfg.baseline) + '/',
               compare: path.relative(this.cfg.report, this.cfg.compare) + '/'

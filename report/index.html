@@ -7,6 +7,9 @@
   <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <style>
+select {
+  display: block;
+}
 .count {
   margin: 0 10px;
 }
@@ -16,7 +19,7 @@
 #g_add .collapsible-header i {
   color: #00c;
 }
-#g_unch .collapsible-header i {
+#g_unchanged .collapsible-header i {
   color: #0a0;
 }
 #g_ch .collapsible-header i {
@@ -48,7 +51,7 @@
 #g_add .card-content {
   background: #ddf;
 }
-#g_unch .card-content {
+#g_unchanged .card-content {
   background: #dfd;
 }
 #g_ch .card-content {
@@ -77,7 +80,7 @@
     </div>
    </div>
   </li>
-  <li id="g_unch">
+  <li id="g_unchanged">
    <div class="collapsible-header"><i class="material-icons">check_circle</i>Unchanged Images<b class="count"></b></div>
    <div class="collapsible-body">
     <div class="row">
@@ -96,11 +99,8 @@
 <script type="text/javascript" src="index.js"></script>
 <script>
 
-const groupClass = (file, group) => {
-}
-
-const image = (file, dir, group) => `<div class="col s12 m6 l4">
- <div class="card darken-1 ${groupClass(file, group)}">
+const image = (file, dir) => `<div class="ccol col s12 m6 l4 ${groupClass(file)}">
+ <div class="card darken-1">
   <div class="card-image">
    <img class="materialboxed" src="${(dir || '')}${file}">
   </div>
@@ -108,22 +108,60 @@ const image = (file, dir, group) => `<div class="col s12 m6 l4">
  </div>
 </div>`
 
+const selStyle = (sel) => {
+  if (!sel.styleNode) {
+    sel.styleNode = document.createElement('style')
+    document.body.appendChild(sel.styleNode)
+  }
+
+  sel.styleNode.innerHTML = sel.value === '' ? '' : `${sel.groupClass} .ccol {display: none} ${sel.groupClass} .g_${sel.value} {display: block}`
+}
+
+const selGroup = (sel) => {
+  if (!sel.groupClass) {
+    sel.groupClass = `#${sel.className.replace(/^s_/, 'g_')}`
+  }
+  if (sel.value === '') {
+    return selStyle(sel)
+  }
+  document.querySelectorAll(`${sel.groupClass} select`).forEach(S => {
+    if (S !== sel) {
+      S.value = ''
+    }
+  })
+  selStyle(sel)
+}
+
+const groupClass = (file) => file.replace(/\.png$/i, '').split(R.cfg.group).map(G => `g_${G}`).join(' ')
+
+const groupHTML = (group, name) => `
+<div class="col s12 m6 l4">
+ <select class="s_${name}" onChange="selGroup(this)">
+  <option value="" selected>${Object.keys(group).length} groups</option>
+${Object.keys(group).map(G => `<option value="${G}">${G} × ${group[G]}</option>`).join('')}
+ </select>
+</div>
+`
+
+const groupsHTML = (group) => R.groups[group].map(G => groupHTML(G, group)).join('')
+
 document.querySelector('#g_remove .count').innerHTML = R.remove.length
-document.querySelector('#g_remove .collapsible-body .row').innerHTML = R.remove.map(F => image(F, R.path.baseline, 'add')).join('')
+document.querySelector('#g_remove .collapsible-body .row').innerHTML = groupsHTML('remove') + R.remove.map(F => image(F, R.path.baseline)).join('')
 document.querySelector('#g_add .count').innerHTML = R.add.length
-document.querySelector('#g_add .collapsible-body .row').innerHTML = R.add.map(F => image(F, R.path.compare, 'remove')).join('')
-document.querySelector('#g_unch .count').innerHTML = R.unchanged.length
-document.querySelector('#g_unch .collapsible-body .row').innerHTML = R.unchanged.map(F => image(F, R.path.baseline, 'unchanged')).join('')
+document.querySelector('#g_add .collapsible-body .row').innerHTML = groupsHTML('add') + R.add.map(F => image(F, R.path.compare)).join('')
+document.querySelector('#g_unchanged .count').innerHTML = R.unchanged.length
+document.querySelector('#g_unchanged .collapsible-body .row').innerHTML = groupsHTML('unchanged') + R.unchanged.map(F => image(F, R.path.baseline)).join('')
 document.querySelector('#g_ch .count').innerHTML = R.schanged.length + R.pchanged.length
 document.querySelector('#g_ch .collapsible-body .row').innerHTML = `
 ${R.schanged.length ? `<p>Size Changed Images × ${R.schanged.length}</p>
-${R.schanged.map(F => image(F, R.path.compare, 'schanged')).join('')}
+${R.schanged.map(F => image(F, R.path.compare)).join('')}
 ` : ''}
 ${R.pchanged.length ? `<p>Content Changed Images × ${R.pchanged.length}</p>
-${R.pchanged.map(F => image(F, '', 'pchanged')).join('')}
+${R.pchanged.map(F => image(F)).join('')}
 ` : ''}`
 
-M.AutoInit()
+M.Collapsible.init(document.querySelectorAll('.collapsible'))
+M.Materialbox.init(document.querySelectorAll('.materialboxed'))
 </script>
 </body>
 </html>
