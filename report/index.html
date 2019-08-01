@@ -22,7 +22,8 @@ select {
 #g_unchanged .collapsible-header i {
   color: #0a0;
 }
-#g_ch .collapsible-header i {
+#g_schanged .collapsible-header i,
+#g_pchanged .collapsible-header i {
   color: #fc0;
 }
 .materialboxed {
@@ -54,7 +55,8 @@ select {
 #g_unchanged .card-content {
   background: #dfd;
 }
-#g_ch .card-content {
+#g_schanged .card-content,
+#g_pchanged .card-content {
   background: #ffd;
 }
 </style>
@@ -69,29 +71,26 @@ select {
   <li id="g_remove">
    <div class="collapsible-header"><i class="material-icons">remove_circle</i>Deleted Images<b class="count"></b></div>
    <div class="collapsible-body">
-    <div class="row">
-    </div>
    </div>
   </li>
   <li id="g_add">
    <div class="collapsible-header"><i class="material-icons">add_circle</i>Added Images<b class="count"></b></div>
    <div class="collapsible-body">
-    <div class="row">
-    </div>
    </div>
   </li>
   <li id="g_unchanged">
    <div class="collapsible-header"><i class="material-icons">check_circle</i>Unchanged Images<b class="count"></b></div>
    <div class="collapsible-body">
-    <div class="row">
-    </div>
    </div>
   </li>
-  <li id="g_ch" class="active">
-   <div class="collapsible-header"><i class="material-icons">warning</i>Changed Images<b class="count"></b></div>
+  <li id="g_schanged">
+   <div class="collapsible-header"><i class="material-icons">warning</i>Size Changed Images<b class="count"></b></div>
    <div class="collapsible-body">
-    <div class="row">
-    </div>
+   </div>
+  </li>
+  <li id="g_pchanged" class="active">
+   <div class="collapsible-header"><i class="material-icons">warning</i>Content Changed Images<b class="count"></b></div>
+   <div class="collapsible-body">
    </div>
   </li>
  </ul>
@@ -145,20 +144,21 @@ ${Object.keys(group).map(G => `<option value="${G}">${G} × ${group[G]}</option>
 
 const groupsHTML = (group) => R.groups[group].map(G => groupHTML(G, group)).join('')
 
+const sectionHTML = (group, path) => `
+<div class="row">${groupsHTML(group)}</div>
+<div class="row">${R[group].map(F => image(F, R.path[path])).join('')}</div>
+`
+
 document.querySelector('#g_remove .count').innerHTML = R.remove.length
-document.querySelector('#g_remove .collapsible-body .row').innerHTML = groupsHTML('remove') + R.remove.map(F => image(F, R.path.baseline)).join('')
+document.querySelector('#g_remove .collapsible-body').innerHTML = sectionHTML('remove', 'baseline')
 document.querySelector('#g_add .count').innerHTML = R.add.length
-document.querySelector('#g_add .collapsible-body .row').innerHTML = groupsHTML('add') + R.add.map(F => image(F, R.path.compare)).join('')
+document.querySelector('#g_add .collapsible-body').innerHTML = sectionHTML('add', 'compare')
 document.querySelector('#g_unchanged .count').innerHTML = R.unchanged.length
-document.querySelector('#g_unchanged .collapsible-body .row').innerHTML = groupsHTML('unchanged') + R.unchanged.map(F => image(F, R.path.baseline)).join('')
-document.querySelector('#g_ch .count').innerHTML = R.schanged.length + R.pchanged.length
-document.querySelector('#g_ch .collapsible-body .row').innerHTML = `
-${R.schanged.length ? `<p>Size Changed Images × ${R.schanged.length}</p>
-${R.schanged.map(F => image(F, R.path.compare)).join('')}
-` : ''}
-${R.pchanged.length ? `<p>Content Changed Images × ${R.pchanged.length}</p>
-${R.pchanged.map(F => image(F)).join('')}
-` : ''}`
+document.querySelector('#g_unchanged .collapsible-body').innerHTML = sectionHTML('unchanged', 'baseline')
+document.querySelector('#g_schanged .count').innerHTML = R.schanged.length
+document.querySelector('#g_schanged .collapsible-body').innerHTML = sectionHTML('schanged', 'compare')
+document.querySelector('#g_pchanged .count').innerHTML = R.pchanged.length
+document.querySelector('#g_pchanged .collapsible-body').innerHTML = sectionHTML('pchanged')
 
 M.Collapsible.init(document.querySelectorAll('.collapsible'))
 M.Materialbox.init(document.querySelectorAll('.materialboxed'))
