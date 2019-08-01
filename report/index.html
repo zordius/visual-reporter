@@ -56,11 +56,6 @@
  <nav>
   <div class="nav-wrapper">
    <a href="./index.html" class="brand-logo">Visual Report</a>
-   <ul id="nav-mobile" class="right hide-on-med-and-down">
-    <li><a href="sass.html">Sass</a></li>
-    <li><a href="badges.html">Components</a></li>
-    <li><a href="collapsible.html">JavaScript</a></li>
-   </ul>
   </div>
  </nav>
  <ul class="collapsible">
@@ -112,6 +107,7 @@ document.querySelector('#g_add .collapsible-body .row').innerHTML = R.add.map(F 
 document.querySelector('#g_unch .count').innerHTML = R.unchanged.length
 document.querySelector('#g_unch .collapsible-body .row').innerHTML = R.unchanged.map(F => image(F, R.path.baseline)).join('')
 document.querySelector('#g_ch .count').innerHTML = R.changed.length
+document.querySelector('#g_ch .collapsible-body .row').innerHTML = R.changed.map(F => image(F.file)).join('')
 M.AutoInit()
 </script>
 </body>
