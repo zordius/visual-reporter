@@ -108,10 +108,10 @@ const setAlt = (img) => {
 
 const image = (file, dir) => `<div class="ccol col s12 m6 l4 ${groupClass(file)}">
  <div class="card darken-1">
-  <div class="card-image">
-   <img class="materialboxed" src="${(dir || '')}${file}" onLoad="setAlt(this)">
+  <div class="card-image" title="${file.file ? `diff=${file.diff}${file.sizeMatched ? '' : `, ${file.baseline.width} × ${file.baseline.height} ⇒  ${file.compare.width} × ${file.compare.height}`}` : ''}">
+   <img class="materialboxed" src="${(dir || '')}${file.file || file}"${file.file ? '' : ' onLoad="setAlt(this)"'}>
   </div>
-  <div class="card-content">${file}</div>
+  <div class="card-content">${file.file || file}</div>
  </div>
 </div>`
 
@@ -141,7 +141,7 @@ const selGroup = (sel) => {
   selStyle(sel)
 }
 
-const groupClass = (file) => file.replace(/\.png$/i, '').split(R.cfg.seperator).map(G => safeClass(`g_${G}`)).join(' ')
+const groupClass = (file) => (file.file || file).replace(/\.png$/i, '').split(R.cfg.seperator).map(G => safeClass(`g_${G}`)).join(' ')
 
 const groupHTML = (group, name, index) => `
 <div class="col s12 m6 l4">

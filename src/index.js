@@ -96,7 +96,7 @@ intersection files: ${this.files.intersection.length}
   analyzeGroup(name) {
     this.groups[name] = []
     this.files[name].forEach(F => {
-      F.replace(/\.png$/i, '')
+      (F.file || F).replace(/\.png$/i, '')
         .split(this.cfg.seperator)
         .forEach((value, I) => {
           if (!this.groups[name][I]) {
@@ -129,8 +129,8 @@ intersection files: ${this.files.intersection.length}
     })
     this.files.unchanged = this.diff.filter(R => R.diff === 0).map(R => R.file)
     const changed = this.diff.filter(R => R.diff)
-    this.files.schanged = changed.filter(R => !R.sizeMatched).map(R => R.file)
-    this.files.pchanged = changed.filter(R => R.sizeMatched).map(R => R.file)
+    this.files.schanged = changed.filter(R => !R.sizeMatched)
+    this.files.pchanged = changed.filter(R => R.sizeMatched)
     bar.stop()
   }
 
