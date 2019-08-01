@@ -9,8 +9,8 @@ Usage
 -----
 
 ```sh
-npm install visual-reporter -g
-visual-reporter --help
+$ npm install visual-reporter -g
+$ visual-reporter --help
 
 Usage: visual-reporter [options] [command]
 
@@ -29,4 +29,15 @@ Options:
 
 Commands:
   generate|gen                Generate visual report
+```
+
+Usecases
+--------
+
+* Put your old visual files into a directory as `baseline`.
+* Run your visual automation testing.
+* New generated visual files are placed in another directory as `compare`.
+* Generate your visual report:
+```
+visual-reporter gen --baseline path/to/baseline --compare path/to/compare
 ```
