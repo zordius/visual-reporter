@@ -40,10 +40,11 @@ select:invalid {
   width: calc(100% - 20px);
 }
 .material-placeholder:last-child {
-  transition: opacity 1s;
+  transition: opacity 0.3s;
   opacity: 0;
 }
-.material-placeholder:last-child:hover {
+.material-placeholder:last-child:hover,
+.material-placeholder:last-child:hover img {
   opacity: 1;
 }
 .material-placeholder:nth-last-child(3):after,
