@@ -179,7 +179,11 @@ intersection files: ${this.files.intersection.length}
       return
     }
     fs.writeFileSync(
-      this.getFilename(this.cfg.report, 'info.txt'), `baseline: ${this.files.baseline.length} , add: ${this.files.add.length} , remove: ${this.files.remove.length} , changed: ${this.files.pchanged.length + this.files.schanged.length}`)
+      this.getFilename(this.cfg.report, 'info.txt'),
+      `baseline: ${this.files.baseline.length} , add: ${this.files.add.length} , remove: ${
+        this.files.remove.length
+      } , changed: ${this.files.pchanged.length + this.files.schanged.length}`
+    )
   }
 
   generateReport() {
