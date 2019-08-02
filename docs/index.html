@@ -31,8 +31,7 @@ select:invalid {
 #g_pchanged .collapsible-header i {
   color: #fc0;
 }
-.material-placeholder:nth-last-child(2),
-.material-placeholder:nth-last-child(3) {
+.material-placeholder:nth-last-child(n+2) {
   position: absolute;
   top: 0;
   left: 0;
@@ -43,8 +42,8 @@ select:invalid {
   transition: opacity 0.3s;
   opacity: 0;
 }
-.material-placeholder:last-child:hover,
-.material-placeholder:last-child:hover img {
+.card-image:hover .material-placeholder:last-child,
+.card-image:hover .material-placeholder:last-child img {
   opacity: 1;
 }
 .material-placeholder:nth-last-child(3):after,
@@ -91,6 +90,7 @@ select:invalid {
   max-height: 200px;
 }
 .card-image {
+  cursor: s-resize;
   padding: 10px;
   height: 220px;
 }
@@ -104,6 +104,7 @@ select:invalid {
   margin: 0 auto;
 }
 .card .card-content {
+  cursor: n-resize;
   word-break: break-all;
   padding: 10px;
 }
