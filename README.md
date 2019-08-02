@@ -72,10 +72,11 @@ $ visual-reporter gen --baseline foo --compare bar --seperator --alpha 0.3 --thr
 Error Codes
 -----------
 
-By default visual-reporter will return exit code 0 when there is no any change are detected. Or, the exit code will be sum of these:
+The error code will be sum of detected change types:
 
 | Change Type                  | Exit Code |
 |------------------------------|-----------|
+| No any chnages are detected  | 0         |
 | new image files are detected | 1         |
 | old image files are missing  | 2         |
 | image size is changed        | 4         |
