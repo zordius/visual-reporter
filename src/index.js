@@ -162,11 +162,15 @@ intersection files: ${this.files.intersection.length}
     )
   }
 
-  saveHTML() {
+  copyFile(name) {
     fs.writeFileSync(
-      this.getFilename(this.cfg.report, 'index.html'),
-      fs.readFileSync(this.getFilename(__dirname, '../report/index.html'))
+      this.getFilename(this.cfg.report, name),
+      fs.readFileSync(this.getFilename(__dirname, '../report/' + name))
     )
+  }
+  saveReport() {
+    this.copyFile('index.html')
+    this.copyFile('favicon.ico')
   }
 
   generateReport() {
@@ -175,7 +179,7 @@ intersection files: ${this.files.intersection.length}
     this.generateDiffImages()
     this.analyzeGroups()
     this.saveMeta()
-    this.saveHTML()
+    this.saveReport()
   }
 }
 
