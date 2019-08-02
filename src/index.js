@@ -95,8 +95,9 @@ intersection files: ${this.files.intersection.length}
 
   analyzeGroup(name) {
     this.groups[name] = []
-    this.files[name].forEach(F => {
-      (F.file || F).replace(/\.png$/i, '')
+    this.files[name].forEach(F =>
+      (F.file || F)
+        .replace(/\.png$/i, '')
         .split(this.cfg.seperator)
         .forEach((value, I) => {
           if (!this.groups[name][I]) {
@@ -107,8 +108,8 @@ intersection files: ${this.files.intersection.length}
           }
           this.groups[name][I][value]++
         })
-    })
-    if (this.groups[name].length == 1) {
+    )
+    if (this.groups[name].length === 1) {
       this.groups[name] = []
     }
   }
