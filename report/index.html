@@ -121,8 +121,11 @@ select:invalid {
   background: #ffd;
 }
 .card-content {
-  overflow-y: auto;
+  overflow: hidden;
   height: 100px;
+}
+.card-content:hover {
+  overflow-y: auto;
 }
 </style>
  </head>
