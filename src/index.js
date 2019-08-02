@@ -186,6 +186,15 @@ intersection files: ${this.files.intersection.length}
     )
   }
 
+  exit() {
+    process.exit(
+      (this.files.add.length ? 1 : 0) +
+        (this.files.remove.length ? 2 : 0) +
+        (this.files.schanged.length ? 4 : 0) +
+        (this.files.pchanged.length ? 8 : 0)
+    )
+  }
+
   generateReport() {
     this.readFiles()
     this.printInfo()
@@ -194,6 +203,7 @@ intersection files: ${this.files.intersection.length}
     this.saveMeta()
     this.saveReport()
     this.saveInfo()
+    this.exit()
   }
 }
 
