@@ -108,6 +108,9 @@ intersection files: ${this.files.intersection.length}
           this.groups[name][I][value]++
         })
     })
+    if (this.groups[name].length == 1) {
+      this.groups[name] = []
+    }
   }
 
   analyzeGroups() {
