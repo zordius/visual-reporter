@@ -7,6 +7,10 @@
   <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <style>
+.switch label {
+  padding: 20px;
+  color: #fff;
+}
 select {
   display: block;
   font-weight: 900;
@@ -35,23 +39,29 @@ select:invalid {
 #g_pchanged .collapsible-header i {
   color: #fc0;
 }
-.material-placeholder:nth-last-child(n+2) {
+.material-placeholder {
+  margin: 10px;
+}
+body.overlap .material-placeholder {
+  margin: 0;
+}
+body.overlap .material-placeholder:nth-last-child(n+2) {
   position: absolute;
   top: 0;
   left: 0;
   margin: 10px;
   width: calc(100% - 20px);
 }
-.material-placeholder:nth-child(n+2):last-child {
+body.overlap .material-placeholder:nth-child(n+2):last-child {
   transition: opacity 0.3s;
   opacity: 0;
 }
-.card-image:hover .material-placeholder:last-child,
-.card-image:hover .material-placeholder:last-child img {
+body.overlap .card-image:hover .material-placeholder:last-child,
+body.overlap .card-image:hover .material-placeholder:last-child img {
   opacity: 1;
 }
-.material-placeholder:nth-last-child(3):after,
-.material-placeholder:nth-last-child(2):first-child:after {
+body.overlap .material-placeholder:nth-last-child(3):after,
+body.overlap .material-placeholder:nth-last-child(2):first-child:after {
   content: 'before';
   position: absolute;
   top: -10px;
@@ -64,15 +74,15 @@ select:invalid {
   background: #cfc;
   color: #080;
 }
-.card:hover .material-placeholder:nth-last-child(3):after {
+body.overlap .card:hover .material-placeholder:nth-last-child(3):after {
   opacity: 1;
 }
-.material-placeholder:nth-last-child(2):first-child:after {
+body.overlap .material-placeholder:nth-last-child(2):first-child:after {
   opacity: 1;
   z-index: 10;
 }
-.material-placeholder:nth-child(3):after,
-.material-placeholder:nth-child(2):last-child:after {
+body.overlap .material-placeholder:nth-child(3):after,
+body.overlap .material-placeholder:nth-child(2):last-child:after {
   content: 'after';
   position: absolute;
   top: 0;
@@ -84,19 +94,24 @@ select:invalid {
   background: #fcc;
   color: #f00;
 }
-.material-placeholder:nth-child(2):last-child:after {
+body.overlap .material-placeholder:nth-child(2):last-child:after {
   z-index: 20;
 }
-.card:hover .material-placeholder:nth-child(2):nth-last-child(2) {
+body.overlap .card:hover .material-placeholder:nth-child(2):nth-last-child(2) {
   opacity: 0;
 }
 .materialboxed {
   max-height: 200px;
 }
 .card-image {
-  cursor: s-resize;
   padding: 10px;
+}
+.overlap .card-image {
   height: 220px;
+}
+.overlap #g_schanged .card-image,
+.overlap #g_pchanged .card-image {
+  cursor: s-resize;
 }
 .card-image:hover {
   background: #eff;
@@ -107,7 +122,8 @@ select:invalid {
   max-width: 100%;
   margin: 0 auto;
 }
-.card .card-content {
+.overlap #g_schanged .card-content,
+.overlap #g_pchanged .card-content {
   cursor: n-resize;
   word-break: break-all;
   padding: 10px;
@@ -134,12 +150,22 @@ select:invalid {
 }
 </style>
  </head>
-<body>
- <nav>
-  <div class="nav-wrapper">
-   <a href="./index.html" class="brand-logo">Visual Report</a>
-  </div>
- </nav>
+<body class="overlap">
+ <div class="navbar-fixed">
+  <nav>
+   <div class="nav-wrapper">
+    <a href="./index.html" class="brand-logo">Visual Report</a>
+    <div class="switch right">
+     <label>
+      one by one
+      <input type="checkbox" checked="checked" onClick="body.className = this.checked ? 'overlap' : ''" />
+      <span class="lever"></span>
+      Overlap
+     </label>
+    </div>
+   </div>
+  </nav>
+ </div>
  <ul class="collapsible">
   <li id="g_remove">
    <div class="collapsible-header"><i class="material-icons">remove_circle</i>Deleted Images<b class="count"></b></div>
