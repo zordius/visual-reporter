@@ -46,7 +46,8 @@ select:invalid {
 .material-placeholder:last-child:hover {
   opacity: 1;
 }
-.material-placeholder:nth-last-child(3):after {
+.material-placeholder:nth-last-child(3):after,
+.material-placeholder:nth-last-child(2):first-child:after {
   content: 'before';
   position: absolute;
   top: -10px;
@@ -63,20 +64,11 @@ select:invalid {
   opacity: 1;
 }
 .material-placeholder:nth-last-child(2):first-child:after {
-  content: 'before';
-  position: absolute;
-  top: -10px;
-  right: -10px;
-  font-size: 9px;
-  padding: 1px;
-  width: 35px;
-  text-align: center;
-  transition: opacity 1s;
-  background: #cfc;
-  color: #080;
+  opacity: 1;
   z-index: 10;
 }
-.material-placeholder:nth-child(3):after {
+.material-placeholder:nth-child(3):after,
+.material-placeholder:nth-child(2):last-child:after {
   content: 'after';
   position: absolute;
   top: 0;
@@ -89,18 +81,7 @@ select:invalid {
   color: #f00;
 }
 .material-placeholder:nth-child(2):last-child:after {
-  content: 'after';
-  position: absolute;
-  top: 0;
-  right: 0;
-  width: 35px;
-  text-align: center;
-  font-size: 9px;
-  padding: 1px;
-  background: #fcc;
-  color: #f00;
   z-index: 20;
-  opacity: 0;
 }
 .card:hover .material-placeholder:nth-child(2):nth-last-child(2) {
   opacity: 0;
@@ -180,7 +161,7 @@ select:invalid {
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 <script type="text/javascript" src="index.js"></script>
 <script>
-const setAlt = (img) => 
+const setAlt = (img) =>
   img.parentNode.parentNode.dataset.tooltip = `${img.naturalWidth} × ${img.naturalHeight}`
 
 const image = (file, dir) => `<div class="ccol col s12 m6 l4 ${groupClass(file)}">
