@@ -168,9 +168,18 @@ intersection files: ${this.files.intersection.length}
       fs.readFileSync(this.getFilename(__dirname, '../report/' + name))
     )
   }
+
   saveReport() {
     this.copyFile('index.html')
     this.copyFile('favicon.ico')
+  }
+
+  saveInfo() {
+    if (!this.cfg.writeInfo) {
+      return
+    }
+    fs.writeFileSync(
+      this.getFilename(this.cfg.report, 'info.txt'), `baseline: ${this.files.baseline.length} , add: ${this.files.add.length} , remove: ${this.files.remove.length} , changed: ${this.files.pchanged.length + this.files.schanged.length}`)
   }
 
   generateReport() {
@@ -180,6 +189,7 @@ intersection files: ${this.files.intersection.length}
     this.analyzeGroups()
     this.saveMeta()
     this.saveReport()
+    this.saveInfo()
   }
 }
 

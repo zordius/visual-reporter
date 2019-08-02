@@ -30,6 +30,7 @@ Options:
   -c --compare <dir>          compare directory, default is "./compare"
   -r --report <dir>           report directory, default is "./report"
   -s --seperator <match>      group seperator, default is "."
+  -w --writeInfo              generate a brief infomation file, default is false
   -k --keepUnchanged          keep unchanged diff image, default is false
   -g --groups <g1,g2,g3,...>  group names, default is "groups"
   -t --threshold <0...1>      matching threshold, default is 0.1

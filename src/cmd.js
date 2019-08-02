@@ -8,6 +8,7 @@ commander
   .option('-c --compare <dir>', 'compare directory, default is "./compare"')
   .option('-r --report <dir>', 'report directory, default is "./report"')
   .option('-s --seperator <match>', 'group seperator, default is "."')
+  .option('-w --writeInfo', 'generate a brief infomation file, default is false')
   .option('-k --keepUnchanged', 'keep unchanged diff image, default is false')
   .option('-g --groups <g1,g2,g3,...>', 'group names, default is "groups"')
   .option('-t --threshold <0...1>', 'matching threshold, default is 0.1')
@@ -28,6 +29,7 @@ commander
       groups: commander.groups?.split(',') || [],
       threshold: commander.threshold || 0.1,
       alpha: commander.alpha || 0.1,
+      writeInfo: commander.writeInfo,
       includeAA: commander.includeAA
     })
     VR.generateReport()

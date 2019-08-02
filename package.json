@@ -1,11 +1,12 @@
 {
   "name": "visual-reporter",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Generate Visual Changes Report",
   "bin": "dist/cmd.js",
   "main": "dist/index.js",
   "scripts": {
     "build": "NODE_ENV=production babel src --out-dir dist && chmod 755 dist/cmd.js",
+    "help": "babel-node src/cmd.js --help",
     "doc": "babel-node src/cmd.js gen --baseline docs/baseline/ --compare docs/current/ --report docs --groups browsers,usecases,elements,screens --alpha 0.2",
     "lint": "prettier --write src/*.js;eslint src/*.js",
     "test": "jest"
