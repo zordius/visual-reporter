@@ -11,7 +11,7 @@ Features:
  * Options to customize the report.
  * Grouping images by seperator in file names.
 
-<img src="diff.gif" />
+<a href="https://zordius.github.io/visual-reporter/"><img src="diff.gif" /></a>
 
 Usage
 -----
