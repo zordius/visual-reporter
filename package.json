@@ -1,6 +1,6 @@
 {
   "name": "visual-reporter",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Generate Visual Changes Report",
   "bin": "dist/cmd.js",
   "main": "dist/index.js",

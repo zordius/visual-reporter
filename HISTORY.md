@@ -1,7 +1,7 @@
 HISTORY
 =======
 
-v1.0.1 https://github.com/zordius/visual-reporter/releases/tag/v1.0.1
+v1.0.2 https://github.com/zordius/visual-reporter/releases/tag/v1.0.2
  * Add favicon in report
  * Add git link in report
  * Support --writeInfo
