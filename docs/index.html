@@ -52,16 +52,44 @@ select:invalid {
 .material-placeholder:nth-child(3):hover {
   opacity: 1;
 }
+.material-placeholder:nth-last-child(3):after {
+  content: 'before';
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  font-size: 9px;
+  padding: 1px;
+  width: 35px;
+  text-align: center;
+  transition: opacity 1s;
+  opacity: 0;
+  background: #cfc;
+  color: #080;
+}
+.card:hover .material-placeholder:nth-last-child(3):after {
+  opacity: 1;
+}
+.material-placeholder:nth-child(3):after {
+  content: 'after';
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 35px;
+  text-align: center;
+  font-size: 9px;
+  padding: 1px;
+  background: #fcc;
+  color: #f00;
+}
 .card:hover .material-placeholder:nth-child(2) {
   opacity: 0;
 }
-
 .materialboxed {
   max-height: 200px;
 }
 .card-image {
   padding: 10px;
-  min-height: 200px;
+  height: 220px;
 }
 .card-image:hover {
   background: #eff;
@@ -88,6 +116,10 @@ select:invalid {
 #g_schanged .card-content,
 #g_pchanged .card-content {
   background: #ffd;
+}
+.card-content {
+  overflow-y: auto;
+  height: 100px;
 }
 </style>
  </head>
