@@ -16,7 +16,7 @@ Features:
 Usage
 -----
 
-```sh
+```
 $ npm install visual-reporter -g
 $ visual-reporter --help
 
@@ -47,5 +47,21 @@ Usecases
 * New generated visual files are placed in another directory as `compare`.
 * Generate your visual report:
 ```
-visual-reporter gen --baseline path/to/baseline --compare path/to/compare
+$ visual-reporter gen --baseline path/to/baseline --compare path/to/compare
+```
+
+* When you named your image files as browser_testCase.png, you can enable grouping by:
+```
+files:
+chrome_login.png
+chrome_logout.png
+iphone_login.png
+iphone_logout.png
+
+$ visual-reporter gen --baseline path/to/baseline --compare path/to/compare --seperator '_' --groups browser,testcase
+```
+
+* The image comparison is done by <a href="https://github.com/mapbox/pixelmatch">pixelmatch</a>, you can pass more options to it.
+```
+$ visual-reporter gen --baseline path/to/baseline --compare path/to/compare --seperator --alpha 0.3 --threshold 0.3 --includeAA
 ```
