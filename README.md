@@ -1,6 +1,8 @@
 visual-reporter
 ===============
 
+<a href="https://www.npmjs.com/package/visual-reporter"><img src="https://badge.fury.io/js/visual-reporter.svg" /></a>
+
 Generate Visual Changes Report, here is a life DEMO:
 
 <a href="https://zordius.github.io/visual-reporter/"><img src="example1.jpg" /></a>
