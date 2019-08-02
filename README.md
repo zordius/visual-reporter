@@ -5,6 +5,14 @@ Generate Visual Changes Report, here is a life DEMO:
 
 <a href="https://zordius.github.io/visual-reporter/"><img src="example1.jpg" /></a>
 
+Features:
+ * One command line tools to generate visual report as static HTML.
+ * View visual difference as overlap changes or different images.
+ * Options to customize the report.
+ * Grouping images by seperator in file names.
+
+<img src="diff.gif" />
+
 Usage
 -----
 
