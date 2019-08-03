@@ -78,6 +78,11 @@ chrome_login.txt
 iphone_login.txt
 ```
 
+* If you want to customize style for your description, you can use this:
+```
+$ visual-reporter gen --baseline baseline --compare compare --customStyle ".card-content { ...}"
+```
+
 * The image comparison is done by <a href="https://github.com/mapbox/pixelmatch">pixelmatch</a>, you can pass more options to it.
 ```
 $ visual-reporter gen --baseline foo --compare bar --seperator --alpha 0.3 --threshold 0.3 --includeAA
