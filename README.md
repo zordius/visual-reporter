@@ -64,6 +64,19 @@ iphone_logout.png
 $ visual-reporter gen --baseline baseline --compare compare --seperator '_' --groups browser,testcase
 ```
 
+* By default, the image description is the file name. You can customize the image description in the report by placing *.txt files besides the *.png files:
+```
+files:
+chrome_login.png
+chrome_logout.png
+iphone_login.png
+iphone_logout.png
+
+descriptions:
+chrome_login.txt
+iphone_login.txt
+```
+
 * The image comparison is done by <a href="https://github.com/mapbox/pixelmatch">pixelmatch</a>, you can pass more options to it.
 ```
 $ visual-reporter gen --baseline foo --compare bar --seperator --alpha 0.3 --threshold 0.3 --includeAA
