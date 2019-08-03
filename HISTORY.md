@@ -1,6 +1,9 @@
 HISTORY
 =======
 
+unreleased
+ * change report image loading order for slow network
+
 v1.0.4 https://github.com/zordius/visual-reporter/releases/tag/v1.0.4
  * exit code > 0 when image changes are detected
 
