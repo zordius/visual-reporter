@@ -161,6 +161,7 @@ intersection files: ${this.files.intersection.length}
           {
             cfg: {
               seperator: this.cfg.seperator,
+              customStyle: this.cfg.customStyle,
               groups: this.cfg.groups || []
             },
             path: {

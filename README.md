@@ -30,9 +30,10 @@ Options:
   -c --compare <dir>          compare directory, default is "./compare"
   -r --report <dir>           report directory, default is "./report"
   -s --seperator <match>      group seperator, default is "."
-  -w --writeInfo              generate a brief infomation file, default is false
+  -w --writeInfo              generate a brief infomation file "info.txt", default is false
   -k --keepUnchanged          keep unchanged diff image, default is false
   -g --groups <g1,g2,g3,...>  group names, default is "groups"
+  -m --customStyle <css>      add custom css into report
   -t --threshold <0...1>      matching threshold, default is 0.1
   -i --includeAA              do not detecting anti-aliased pixels, default is false
   -a --alpha <0...1>          alpha of unchanged pixels, default is 0.1

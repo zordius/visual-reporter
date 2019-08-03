@@ -11,6 +11,7 @@ commander
   .option('-w --writeInfo', 'generate a brief infomation file "info.txt", default is false')
   .option('-k --keepUnchanged', 'keep unchanged diff image, default is false')
   .option('-g --groups <g1,g2,g3,...>', 'group names, default is "groups"')
+  .option('-m --customStyle <css>', 'add custom css into report')
   .option('-t --threshold <0...1>', 'matching threshold, default is 0.1')
   .option('-i --includeAA', 'do not detecting anti-aliased pixels, default is false')
   .option('-a --alpha <0...1>', 'alpha of unchanged pixels, default is 0.1')
@@ -29,6 +30,7 @@ commander
       groups: commander.groups?.split(',') || [],
       threshold: commander.threshold || 0.1,
       alpha: commander.alpha || 0.1,
+      customStyle: commander.customStyle,
       writeInfo: commander.writeInfo,
       includeAA: commander.includeAA
     })

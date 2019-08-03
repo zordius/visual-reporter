@@ -208,6 +208,12 @@ body.overlap .card:hover .material-placeholder:nth-child(2):nth-last-child(2) {
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 <script type="text/javascript" src="index.js"></script>
 <script>
+if (R.cfg.customStyle) {
+  const style = document.createElement('style')
+  style.innerHTML = R.cfg.customStyle
+  document.body.appendChild(style)
+}
+
 const setAlt = (img) =>
   img.parentNode.parentNode.dataset.tooltip = `${img.naturalWidth} × ${img.naturalHeight}`
 

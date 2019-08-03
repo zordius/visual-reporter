@@ -1,6 +1,7 @@
 R = {
  "cfg": {
   "seperator": ".",
+  "customStyle": ".card-content a {display:inline-block;vertical-align:middle}",
   "groups": [
    "browsers",
    "usecases",
