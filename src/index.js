@@ -4,21 +4,36 @@ import path from 'path'
 import { PNG } from 'pngjs'
 import { Bar, Presets } from 'cli-progress'
 
+const matchPng = /\.png$/i
+
 class visualReporter {
   constructor(cfg) {
     this.cfg = { ...cfg }
   }
 
+  getDescription(dir, F) {
+    const name = path.resolve(dir, F.replace(matchPng, '.txt'))
+    return fs.existsSync(name) ? fs.readFileSync(name, 'utf8') : undefined
+  }
+
   getFiles(dir) {
-    return fs.readdirSync(dir).filter(F => F.match(/\.png$/))
+    return fs
+      .readdirSync(dir)
+      .filter(F => F.match(matchPng))
+      .map(F => ({
+        file: F,
+        description: this.getDescription(dir, F)
+      }))
   }
 
   getAdded(list1, list2) {
-    return list2.filter(F => !list1.includes(F))
+    const files = list1.map(F => F.file)
+    return list2.filter(F => !files.includes(F.file))
   }
 
   getIntersection(list1, list2) {
-    return list2.filter(F => list1.includes(F))
+    const files = list1.map(F => F.file)
+    return list2.filter(F => files.includes(F.file))
   }
 
   getFilename(dir, file) {
@@ -36,13 +51,13 @@ class visualReporter {
     fs.writeFileSync(this.getFilename(dir, file), PNG.sync.write(png))
   }
 
-  generateDiff(file) {
-    const img1 = this.readPng(this.cfg.baseline, file)
-    const img2 = this.readPng(this.cfg.compare, file)
+  generateDiff(F) {
+    const img1 = this.readPng(this.cfg.baseline, F.file)
+    const img2 = this.readPng(this.cfg.compare, F.file)
     const { width, height } = img1
     const diff = width * height - img2.width * img2.height
     const R = {
-      file,
+      ...F,
       sizeMatched: false,
       baseline: {
         width,
@@ -69,7 +84,7 @@ class visualReporter {
     })
 
     if (R.diff > 0 || this.cfg.keepUnchanged) {
-      this.writePng(this.cfg.report, file, diffImg)
+      this.writePng(this.cfg.report, F.file, diffImg)
     }
     return R
   }
@@ -90,14 +105,14 @@ intersection files: ${this.files.intersection.length}
     this.files.compare = this.getFiles(this.cfg.compare)
     this.files.add = this.getAdded(this.files.baseline, this.files.compare)
     this.files.remove = this.getAdded(this.files.compare, this.files.baseline)
-    this.files.intersection = this.getIntersection(this.files.compare, this.files.baseline)
+    this.files.intersection = this.getIntersection(this.files.baseline, this.files.compare)
   }
 
   analyzeGroup(name) {
     this.groups[name] = []
     this.files[name].forEach(F =>
-      (F.file || F)
-        .replace(/\.png$/i, '')
+      F.file
+        .replace(matchPng, '')
         .split(this.cfg.seperator)
         .forEach((value, I) => {
           if (!this.groups[name][I]) {
@@ -131,7 +146,7 @@ intersection files: ${this.files.intersection.length}
       bar.update(I + 1)
       return R
     })
-    this.files.unchanged = this.diff.filter(R => R.diff === 0).map(R => R.file)
+    this.files.unchanged = this.diff.filter(R => R.diff === 0)
     const changed = this.diff.filter(R => R.diff)
     this.files.schanged = changed.filter(R => !R.sizeMatched)
     this.files.pchanged = changed.filter(R => R.sizeMatched)

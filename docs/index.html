@@ -131,8 +131,6 @@ body.overlap .card:hover .material-placeholder:nth-child(2):nth-last-child(2) {
 .overlap #g_schanged .card-content,
 .overlap #g_pchanged .card-content {
   cursor: n-resize;
-  word-break: break-all;
-  padding: 10px;
 }
 #g_remove .card-content {
   background: #fdd;
@@ -150,6 +148,8 @@ body.overlap .card:hover .material-placeholder:nth-child(2):nth-last-child(2) {
 .card-content {
   overflow: hidden;
   height: 100px;
+  word-break: break-all;
+  padding: 10px;
 }
 .card-content:hover {
   overflow-y: auto;
@@ -205,14 +205,14 @@ body.overlap .card:hover .material-placeholder:nth-child(2):nth-last-child(2) {
 const setAlt = (img) =>
   img.parentNode.parentNode.dataset.tooltip = `${img.naturalWidth} × ${img.naturalHeight}`
 
-const image = (file, dir) => `<div class="ccol col s12 m6 l4 ${groupClass(file)}">
+const image = (file, group, dir) => `<div class="ccol col s12 m6 l4 ${groupClass(file)}">
  <div class="card darken-1">
-  <div class="card-image" data-tooltip="${file.file ? `diff=${file.diff}, ${file.baseline.width} × ${file.baseline.height}${file.sizeMatched ? '' : ` ⇒  ${file.compare.width} × ${file.compare.height}`}` : ''}">
-   ${file.file && !dir ? `<img class="materialboxed" src="${R.path.baseline}${encodeURIComponent(file.file)}">` : ''}
-   <img class="materialboxed" src="${(dir || '')}${encodeURIComponent(file.file || file)}"${file.file ? '' : ' onLoad="setAlt(this)"'}>
-   ${file.file ? `<img class="materialboxed" src="${R.path.compare}${encodeURIComponent(file.file)}">` : ''}
+  <div class="card-image" data-tooltip="${file.baseline ? `diff=${file.diff}, ${file.baseline.width} × ${file.baseline.height}${file.sizeMatched ? '' : ` ⇒  ${file.compare.width} × ${file.compare.height}`}` : ''}">
+   ${group === 'schanged' ? `<img class="materialboxed" src="${R.path.baseline}${encodeURIComponent(file.file)}">` : ''}
+   <img class="materialboxed" src="${(dir || '')}${encodeURIComponent(file.file)}"${file.baseline ? '' : ' onLoad="setAlt(this)"'}>
+   ${group === 'pchanged' ? `<img class="materialboxed" src="${R.path.compare}${encodeURIComponent(file.file)}">` : ''}
   </div>
-  <div class="card-content">${file.file || file}</div>
+  <div class="card-content">${file.description || file.file}</div>
  </div>
 </div>`
 
@@ -261,7 +261,7 @@ const groupsHTML = (group) => R.groups[group].map((G, I) => groupHTML(G, group, 
 
 const sectionHTML = (group, path) => `
 <div class="row">${groupsHTML(group)}</div>
-<div class="row">${R[group].map(F => image(F, R.path[path])).join('')}</div>
+<div class="row">${R[group].map(F => image(F, group, R.path[path])).join('')}</div>
 `
 
 document.querySelector('#g_pchanged .count').innerHTML = R.pchanged.length
