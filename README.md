@@ -1,7 +1,7 @@
 visual-reporter
 ===============
 
-<a href="https://www.npmjs.com/package/visual-reporter"><img src="https://badge.fury.io/js/visual-reporter.svg" /></a> [![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
+[![Build Status](https://travis-ci.org/zordius/visual-reporter.svg?branch=master)](https://travis-ci.org/zordius/visual-reporter) <a href="https://www.npmjs.com/package/visual-reporter"><img src="https://badge.fury.io/js/visual-reporter.svg" /></a> [![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 
 Generate Visual Changes Report, here is a life DEMO:
 
