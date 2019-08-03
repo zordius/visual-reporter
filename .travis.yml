@@ -10,6 +10,7 @@ deploy:
   email: zordius@gmail.com
   api_key:
     secure: nb7oi06R3wsgJXV3YfBUwOyrysc/7w/eOUIpqjJKg0MYyo5366wsjLEYJOgqladqcvTDtrbN6qmWO3NJDTjQOaJAXM6cp+iw6vmOBf6Uw9kIgAAGSKk3EDO9Ta4312fuRWdTWb2oDq4FB2jqYLDWvjVNhC8vZerXUcCj50yGdcfxVJQsxqICrXkD4Lf1kRr10DDyS5vm0yE1i3QLP30RsJRKnDPv+ubTap90XP9qFl/yT+rf0WlkjafA1EmvfhEWFG4FievR/CAXQ+jTXIGlEWp/RgIoZ/z9ekiLbotqoSNyCi2C1bdHlaDu5X30ZLJXNnoQsb5QKvpdpK/YT+0mpMffTbRerKIeDQaepfgX2BsktgmcFlWSZlhQvBGPFl2Vvlq3/NajquRmXOSC8FMv0gqWE/ZjCUPePFvtrvy+55tpSLOeAz5tWs68rDxHvxzmH4C7tmhPItXl4+aeq5LAQ5hqkd/rqyqN5CxT0ICCQdIVYCqi1uE+SDdXSo/fJz8rznY7NP4COTn7hV0RcvkdTq9A4XUskR3qwj0axULQaqcVVNjUAGWpCDkIDiJzvrOUy6UR2YTwQkDv3kTt7hHzD26OCdeV3Uf4uasSLcWDnm/mTq/XZYbDGa31laUQSvhuSBR/+kLKpyGKn7kOXKh6Kevh1KMVR+ishtZ026lkZ/w=
+  skip_cleanup: true
   on:
     tags: true
     repo: zordius/visual-reporter
