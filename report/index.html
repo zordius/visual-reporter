@@ -264,16 +264,16 @@ const sectionHTML = (group, path) => `
 <div class="row">${R[group].map(F => image(F, R.path[path])).join('')}</div>
 `
 
+document.querySelector('#g_pchanged .count').innerHTML = R.pchanged.length
+document.querySelector('#g_pchanged .collapsible-body').innerHTML = sectionHTML('pchanged')
+document.querySelector('#g_schanged .count').innerHTML = R.schanged.length
+document.querySelector('#g_schanged .collapsible-body').innerHTML = sectionHTML('schanged', 'baseline')
 document.querySelector('#g_remove .count').innerHTML = R.remove.length
 document.querySelector('#g_remove .collapsible-body').innerHTML = sectionHTML('remove', 'baseline')
 document.querySelector('#g_add .count').innerHTML = R.add.length
 document.querySelector('#g_add .collapsible-body').innerHTML = sectionHTML('add', 'compare')
 document.querySelector('#g_unchanged .count').innerHTML = R.unchanged.length
 document.querySelector('#g_unchanged .collapsible-body').innerHTML = sectionHTML('unchanged', 'baseline')
-document.querySelector('#g_schanged .count').innerHTML = R.schanged.length
-document.querySelector('#g_schanged .collapsible-body').innerHTML = sectionHTML('schanged', 'baseline')
-document.querySelector('#g_pchanged .count').innerHTML = R.pchanged.length
-document.querySelector('#g_pchanged .collapsible-body').innerHTML = sectionHTML('pchanged')
 
 M.Collapsible.init(document.querySelectorAll('.collapsible'))
 M.Materialbox.init(document.querySelectorAll('.materialboxed'))
