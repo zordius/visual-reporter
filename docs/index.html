@@ -220,9 +220,9 @@ const setAlt = (img) =>
 const image = (file, group, dir) => `<div class="ccol col s12 m6 l4 ${groupClass(file)}">
  <div class="card darken-1">
   <div class="card-image" data-tooltip="${file.baseline ? `diff=${file.diff}, ${file.baseline.width} × ${file.baseline.height}${file.sizeMatched ? '' : ` ⇒  ${file.compare.width} × ${file.compare.height}`}` : ''}">
-   ${group.match(/(s|p)changed/) ? `<img class="materialboxed" src="${R.path.baseline}${encodeURIComponent(file.file)}">` : ''}
+   ${(group === 'pchanged') ? `<img class="materialboxed" src="${R.path.baseline}${encodeURIComponent(file.file)}">` : ''}
    <img class="materialboxed" src="${(dir || '')}${encodeURIComponent(file.file)}"${file.baseline ? '' : ' onLoad="setAlt(this)"'}>
-   ${group === 'pchanged' ? `<img class="materialboxed" src="${R.path.compare}${encodeURIComponent(file.file)}">` : ''}
+   ${group.match(/(s|p)changed/) ? `<img class="materialboxed" src="${R.path.compare}${encodeURIComponent(file.file)}">` : ''}
   </div>
   <div class="card-content">${file.description || file.file}</div>
  </div>
