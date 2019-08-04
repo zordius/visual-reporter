@@ -67,7 +67,7 @@ $ visual-reporter gen --baseline baseline --compare compare --seperator '_' --gr
 
 * By default, the image description is the file name. You can customize the image description in the report by placing *.txt files besides the *.png files:
 ```
-files:
+images:
 chrome_login.png
 chrome_logout.png
 iphone_login.png
