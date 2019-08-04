@@ -1,7 +1,7 @@
 R = {
  "cfg": {
   "seperator": ".",
-  "customStyle": ".card-content a {display:inline-block;vertical-align:middle}",
+  "customStyle": ".card-content i{font-size:16px}.card-content a{display:inline-block;vertical-align:middle}.card-content li:before{content:\"▶\";color:#0ae}",
   "groups": [
    "browsers",
    "usecases",
