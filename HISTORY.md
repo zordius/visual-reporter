@@ -3,6 +3,9 @@ HISTORY
 
 unreleased
 
+v1.0.7 https://github.com/zordius/visual-reporter/releases/tag/v1.0.7
+ * bug fix: 1.0.5 size changed image preview issue
+
 v1.0.6 https://github.com/zordius/visual-reporter/releases/tag/v1.0.6
  * bug fix: 1.0.5 content changed image preview issue
 
