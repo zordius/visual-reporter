@@ -3,6 +3,9 @@ HISTORY
 
 unreleased
 
+v1.0.6 https://github.com/zordius/visual-reporter/releases/tag/v1.0.6
+ * bug fix: 1.0.5 content changed image preview issue
+
 v1.0.5 https://github.com/zordius/visual-reporter/releases/tag/v1.0.5
  * change report image loading order for slow network
  * fix add/remove description style
