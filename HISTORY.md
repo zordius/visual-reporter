@@ -2,6 +2,9 @@ HISTORY
 =======
 
 unreleased
+ * refine message for no image case
+ * add loading display
+ * add error display
 
 v1.0.7 https://github.com/zordius/visual-reporter/releases/tag/v1.0.7
  * bug fix: 1.0.5 size changed image preview issue
