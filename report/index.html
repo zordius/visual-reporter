@@ -161,8 +161,8 @@ body.overlap .card:hover .material-placeholder:nth-child(2):nth-last-child(2) {
   overflow-y: auto;
 }
 .loading {position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.5)}
-.spinner {position:absolute;top:50%;left:50%;background:#fff;padding:10px;transform:translate(-50%,-50%);width:250px;height:60px;font-size:16px;font-weight:900;text-align:center}
-.spinner span {vertical-align:top;display:inline-block;margin:10px}
+.spinner {position:absolute;top:50%;left:50%;background:#fff;padding:10px;transform:translate(-50%,-50%);width:220px;height:48px;line-height:28px;font-size:16px;font-weight:900;text-align:center}
+.spinner span {vertical-align:top;display:inline-block;margin:0 10px}
 .spinner div {background:#333;height:100%;width:6px;display:inline-block;-webkit-animation: sk-stretchdelay 1.2s infinite ease-in-out;animation: sk-stretchdelay 1.2s infinite ease-in-out}
 .spinner .rect2 {-webkit-animation-delay: -1.1s;animation-delay: -1.1s}
 .spinner .rect3 {-webkit-animation-delay: -1.0s;animation-delay: -1.0s}
@@ -302,23 +302,27 @@ const groupsHTML = (group) => R.groups[group].map((G, I) => groupHTML(G, group, 
 const sectionHTML = (group, path) => `
 <div class="row">${groupsHTML(group)}</div>
 <div class="row">${R[group].map(F => image(F, group, R.path[path])).join('')}</div>
+${R[group].length === 0 ? 'There is no image here...😅' : ''}
 `
 
-document.querySelector('#g_pchanged .count').innerHTML = R.pchanged.length
-document.querySelector('#g_pchanged .collapsible-body').innerHTML = sectionHTML('pchanged')
-document.querySelector('#g_schanged .count').innerHTML = R.schanged.length
-document.querySelector('#g_schanged .collapsible-body').innerHTML = sectionHTML('schanged', 'baseline')
-document.querySelector('#g_remove .count').innerHTML = R.remove.length
-document.querySelector('#g_remove .collapsible-body').innerHTML = sectionHTML('remove', 'baseline')
-document.querySelector('#g_add .count').innerHTML = R.add.length
-document.querySelector('#g_add .collapsible-body').innerHTML = sectionHTML('add', 'compare')
-document.querySelector('#g_unchanged .count').innerHTML = R.unchanged.length
-document.querySelector('#g_unchanged .collapsible-body').innerHTML = sectionHTML('unchanged', 'baseline')
-
-style.innerHTML = 'body > .loading{display:none}' + (R.cfg.customStyle || '')
-M.Collapsible.init(document.querySelectorAll('.collapsible'))
-M.Materialbox.init(document.querySelectorAll('.materialboxed'))
-M.Tooltip.init(document.querySelectorAll('.card-image'))
+if (window.R) {
+  document.querySelector('#g_pchanged .count').innerHTML = R.pchanged.length
+  document.querySelector('#g_pchanged .collapsible-body').innerHTML = sectionHTML('pchanged')
+  document.querySelector('#g_schanged .count').innerHTML = R.schanged.length
+  document.querySelector('#g_schanged .collapsible-body').innerHTML = sectionHTML('schanged', 'baseline')
+  document.querySelector('#g_remove .count').innerHTML = R.remove.length
+  document.querySelector('#g_remove .collapsible-body').innerHTML = sectionHTML('remove', 'baseline')
+  document.querySelector('#g_add .count').innerHTML = R.add.length
+  document.querySelector('#g_add .collapsible-body').innerHTML = sectionHTML('add', 'compare')
+  document.querySelector('#g_unchanged .count').innerHTML = R.unchanged.length
+  document.querySelector('#g_unchanged .collapsible-body').innerHTML = sectionHTML('unchanged', 'baseline')
+//  style.innerHTML = 'body > .loading{display:none}' + (R.cfg.customStyle || '')
+  M.Collapsible.init(document.querySelectorAll('.collapsible'))
+  M.Materialbox.init(document.querySelectorAll('.materialboxed'))
+  M.Tooltip.init(document.querySelectorAll('.card-image'))
+} else {
+  document.querySelector('body > .loading .spinner').innerHTML = 'Error: no index.js'
+}
 </script>
 </body>
 </html>
