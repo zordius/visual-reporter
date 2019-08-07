@@ -316,7 +316,7 @@ if (window.R) {
   document.querySelector('#g_add .collapsible-body').innerHTML = sectionHTML('add', 'compare')
   document.querySelector('#g_unchanged .count').innerHTML = R.unchanged.length
   document.querySelector('#g_unchanged .collapsible-body').innerHTML = sectionHTML('unchanged', 'baseline')
-//  style.innerHTML = 'body > .loading{display:none}' + (R.cfg.customStyle || '')
+  style.innerHTML = 'body > .loading{display:none}' + (R.cfg.customStyle || '')
   M.Collapsible.init(document.querySelectorAll('.collapsible'))
   M.Materialbox.init(document.querySelectorAll('.materialboxed'))
   M.Tooltip.init(document.querySelectorAll('.card-image'))
