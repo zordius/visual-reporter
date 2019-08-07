@@ -1,7 +1,7 @@
 R = {
  "cfg": {
   "seperator": ".",
-  "customStyle": ".card-content i{font-size:16px}.card-content a{display:inline-block;vertical-align:middle}.card-content li:before{content:\"▶\";color:#0ae}",
+  "customStyle": ".card-content i{font-size:16px}.card-content a{display:inline-block;vertical-align:middle}.card-content li:before{content:\"▶\";color:#0ae}.card-content:before{content:\"\";position:absolute;width:16px;height:16px;background-size:cover;left:-4px;top:-4px}.g_chrome .card-content:before{background-image:url(https://cdnjs.cloudflare.com/ajax/libs/browser-logos/56.3.1/archive/chrome-android_18-36/chrome-android_18-36_32x32.png)}.g_iphone .card-content:before{background-image:url(https://cdnjs.cloudflare.com/ajax/libs/ionicons/4.5.6/collection/build/ionicons/svg/ios-phone-portrait.svg)}.g_firefox .card-content:before{background-image:url(https://cdnjs.cloudflare.com/ajax/libs/browser-logos/56.3.1/archive/firefox_1.5-3/firefox_1.5-3_32x32.png)}.g_ipad .card-content:before{background-image:url(https://cdnjs.cloudflare.com/ajax/libs/ionicons/4.5.6/collection/build/ionicons/svg/md-tablet-landscape.svg)}",
   "groups": [
    "browsers",
    "usecases",
